@@ -39,3 +39,9 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Large artifacts/screenshots
+*.png
+/extracted_imgs/
+/ref/
+dev.log
