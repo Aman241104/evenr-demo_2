@@ -95,13 +95,13 @@ export default function GalleryPage() {
       <section className="px-6 md:px-12">
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 auto-rows-[300px]">
-            {filteredItems.map((item, index) => (
+            {filteredItems.map((item) => (
               <div 
                 key={`${item.title}-${activeCategory}`} 
-                onClick={() => setSelectedImage({src: item.image, title: item.title})}
                 className={cn(
-                  "animate-fade-in cursor-pointer",
-                  item.size === "large" ? "lg:col-span-2" : ""
+                  "animate-fade-in",
+                  item.size === "large" ? "md:col-span-2 row-span-2" : "",
+                  item.size === "medium" ? "row-span-2" : ""
                 )}
               >
                 <BentoCard
@@ -110,6 +110,7 @@ export default function GalleryPage() {
                   image={item.image}
                   size={item.size}
                   className="h-full"
+                  onClick={() => setSelectedImage({src: item.image, title: item.title})}
                 />
               </div>
             ))}

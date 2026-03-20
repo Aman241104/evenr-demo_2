@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useRef } from "react";
+import Image from "next/image";
 import { TextReveal } from "@/components/atoms/TextReveal";
 import { OrnateLogo } from "@/components/atoms/OrnateLogo";
 import { useGSAP } from "@gsap/react";
@@ -53,17 +54,24 @@ export default function AboutPage() {
     // Metric counters animation
     const metricItems = metricsRef.current?.querySelectorAll(".metric-item");
     if (metricItems) {
-      gsap.from(metricItems, {
-        scrollTrigger: {
-          trigger: metricsRef.current,
-          start: "top 80%",
+      gsap.fromTo(metricItems, 
+        {
+          y: 50,
+          opacity: 0,
         },
-        y: 50,
-        opacity: 0,
-        duration: 1,
-        stagger: 0.2,
-        ease: "power3.out",
-      });
+        {
+          scrollTrigger: {
+            trigger: metricsRef.current,
+            start: "top 80%",
+          },
+          y: 0,
+          opacity: 1,
+          duration: 1,
+          stagger: 0.2,
+          ease: "power3.out",
+          clearProps: "all",
+        }
+      );
     }
   }, { scope: containerRef });
 
@@ -78,9 +86,9 @@ export default function AboutPage() {
             </span>
             <TextReveal 
               text="ORCHESTRATING MOMENTS SINCE 2011" 
-              className="text-5xl md:text-8xl font-serif text-primary leading-tight mb-12"
+              className="text-4xl md:text-8xl font-serif text-primary leading-tight mb-8 md:mb-12"
             />
-            <div className="space-y-8 text-primary/70 font-light leading-relaxed text-lg max-w-md">
+            <div className="space-y-6 md:space-y-8 text-primary/70 font-light leading-relaxed text-base md:text-lg max-w-md">
               <p>
                 Zing Bliss Events is dedicated to turning life’s special moments into unforgettable experiences. We specialize in planning, designing, and executing events with creativity, precision, and professionalism.
               </p>
@@ -90,36 +98,39 @@ export default function AboutPage() {
             </div>
           </div>
           
-          <div className="w-full md:w-1/2 mt-12 md:mt-0">
+          <div className="w-full md:w-1/2 mt-8 md:mt-0">
             <div className="parallax-container relative aspect-[3/4] overflow-hidden rounded-sm">
-              <img 
+              <Image 
                 src="https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&q=80" 
                 alt="The Legacy"
                 className="parallax-bg absolute inset-0 w-full h-[120%] object-cover -top-[10%]"
+                width={800}
+                height={1200}
+                priority
               />
-              <div className="absolute inset-0 border-[2vw] border-secondary" />
+              <div className="absolute inset-0 border-[4vw] md:border-[2vw] border-secondary" />
             </div>
           </div>
         </div>
       </section>
 
       {/* Philosophy Grid */}
-      <section className="bg-primary text-secondary py-32 px-6 md:px-12">
+      <section className="bg-primary text-secondary py-20 md:py-32 px-6 md:px-12">
         <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-24">
-            <OrnateLogo light className="mb-12 scale-150" />
+          <div className="text-center mb-16 md:mb-24">
+            <OrnateLogo light className="mb-8 md:mb-12 scale-110 md:scale-150" />
             <TextReveal 
               text="OUR CORE PHILOSOPHY" 
-              className="text-4xl md:text-6xl font-serif"
+              className="text-3xl md:text-6xl font-serif"
             />
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-16 md:gap-24">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-24">
             {philosophies.map((item, index) => (
-              <div key={index} className="flex flex-col gap-6 text-center md:text-left">
-                <span className="text-accent font-serif text-2xl">0{index + 1}</span>
-                <h3 className="text-2xl font-serif tracking-wide">{item.title}</h3>
-                <p className="text-secondary/60 font-light leading-relaxed">
+              <div key={index} className="flex flex-col gap-4 md:gap-6 text-center md:text-left">
+                <span className="text-accent font-serif text-xl md:text-2xl">0{index + 1}</span>
+                <h3 className="text-xl md:text-2xl font-serif tracking-wide">{item.title}</h3>
+                <p className="text-secondary/60 font-light leading-relaxed text-sm md:text-base">
                   {item.description}
                 </p>
               </div>
@@ -129,15 +140,15 @@ export default function AboutPage() {
       </section>
 
       {/* Metrics Section */}
-      <section ref={metricsRef} className="py-32 px-6 md:px-12 border-b border-primary/5">
+      <section ref={metricsRef} className="py-20 md:py-32 px-6 md:px-12 border-b border-primary/5">
         <div className="max-w-7xl mx-auto">
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-12 md:gap-24">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 md:gap-24">
             {metrics.map((metric, index) => (
               <div key={index} className="metric-item text-center">
-                <div className="text-5xl md:text-7xl font-serif text-primary mb-2">
+                <div className="text-4xl md:text-7xl font-serif text-primary mb-1 md:mb-2">
                   {metric.value}
                 </div>
-                <div className="text-[10px] tracking-[0.4em] uppercase text-accent font-sans">
+                <div className="text-[8px] md:text-[10px] tracking-[0.3em] md:tracking-[0.4em] uppercase text-accent font-sans">
                   {metric.label}
                 </div>
               </div>
@@ -147,59 +158,59 @@ export default function AboutPage() {
       </section>
 
       {/* The Collective (Membership Tier) */}
-      <section className="py-32 px-6 md:px-12 bg-secondary overflow-hidden">
+      <section className="py-20 md:py-32 px-6 md:px-12 bg-secondary overflow-hidden">
         <div className="max-w-7xl mx-auto">
-          <div className="flex flex-col lg:flex-row items-center gap-24">
+          <div className="flex flex-col lg:flex-row items-center gap-16 md:gap-24">
             <div className="w-full lg:w-1/2">
               <span className="text-accent text-[10px] tracking-[0.4em] uppercase mb-4 block">
                 The Collective
               </span>
               <TextReveal 
                 text="AN EXCLUSIVE LEGACY" 
-                className="text-4xl md:text-6xl font-serif text-primary mb-8"
+                className="text-3xl md:text-6xl font-serif text-primary mb-6 md:mb-8"
               />
-              <p className="text-primary/60 text-lg font-light leading-relaxed mb-12 max-w-lg">
-                For our most distinguished clients, we offer 'The Collective'—a hidden tier of service designed for the orchestration of multi-generational legacies and global private celebrations.
+              <p className="text-primary/60 text-base md:text-lg font-light leading-relaxed mb-8 md:mb-12 max-w-lg">
+                For our most distinguished clients, we offer &apos;The Collective&apos;—a hidden tier of service designed for the orchestration of multi-generational legacies and global private celebrations.
               </p>
               
-              <ul className="space-y-6">
+              <ul className="space-y-4 md:space-y-6">
                 {[
                   "Priority booking for global peak seasons",
                   "Exclusive access to non-public partner venues",
                   "Seasonal luxury trend reports & spatial forecast",
                   "24/7 Digital Concierge via The Vault"
                 ].map((item, i) => (
-                  <li key={i} className="flex items-center gap-4 group">
+                  <li key={i} className="flex items-center gap-3 md:gap-4 group">
                     <div className="w-1.5 h-1.5 rounded-full bg-accent group-hover:scale-150 transition-transform" />
-                    <span className="text-sm tracking-widest uppercase text-primary/70">{item}</span>
+                    <span className="text-xs md:text-sm tracking-widest uppercase text-primary/70">{item}</span>
                   </li>
                 ))}
               </ul>
             </div>
 
-            <div className="w-full lg:w-1/2 relative">
-              <div className="aspect-[4/5] bg-primary rounded-sm p-12 flex flex-col justify-between relative z-10 overflow-hidden shadow-2xl">
+            <div className="w-full lg:w-1/2 relative mt-12 lg:mt-0">
+              <div className="aspect-[4/5] bg-primary rounded-sm p-8 md:p-12 flex flex-col justify-between relative z-10 overflow-hidden shadow-2xl">
                 {/* Decorative Pattern Overlay */}
-                <div className="absolute inset-0 opacity-[0.03] pointer-events-none text-[200px] font-serif leading-none select-none">
+                <div className="absolute inset-0 opacity-[0.03] pointer-events-none text-[100px] md:text-[200px] font-serif leading-none select-none">
                   COLLECTIVE
                 </div>
                 
                 <div className="relative z-20">
-                  <OrnateLogo light className="items-start text-left scale-75 -ml-4" />
+                  <OrnateLogo light className="items-start text-left scale-50 md:scale-75 -ml-8 md:-ml-4" />
                 </div>
 
                 <div className="relative z-20">
-                  <span className="text-accent text-[10px] tracking-[0.5em] uppercase mb-2 block">Membership Card</span>
-                  <h3 className="text-3xl font-serif text-secondary mb-1">LEGACY CLIENT</h3>
-                  <span className="text-[8px] tracking-[0.3em] uppercase text-secondary/40">Zing Bliss Events — Collective Tier</span>
+                  <span className="text-accent text-[8px] md:text-[10px] tracking-[0.5em] uppercase mb-1 md:mb-2 block">Membership Card</span>
+                  <h3 className="text-2xl md:text-3xl font-serif text-secondary mb-1">LEGACY CLIENT</h3>
+                  <span className="text-[7px] md:text-[8px] tracking-[0.3em] uppercase text-secondary/40">Zing Bliss Events — Collective Tier</span>
                 </div>
 
-                <div className="relative z-20 flex justify-between items-end border-t border-secondary/10 pt-8">
-                  <div className="text-[8px] tracking-widest text-secondary/30 uppercase">
+                <div className="relative z-20 flex justify-between items-end border-t border-secondary/10 pt-6 md:pt-8">
+                  <div className="text-[7px] md:text-[8px] tracking-widest text-secondary/30 uppercase">
                     Non-Transferable<br />Est. 2011
                   </div>
-                  <div className="w-12 h-12 rounded-full border border-accent/20 flex items-center justify-center">
-                    <div className="w-8 h-8 rounded-full border border-accent/40" />
+                  <div className="w-10 h-10 md:w-12 md:h-12 rounded-full border border-accent/20 flex items-center justify-center">
+                    <div className="w-6 h-6 md:w-8 md:h-8 rounded-full border border-accent/40" />
                   </div>
                 </div>
               </div>

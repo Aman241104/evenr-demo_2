@@ -10,27 +10,27 @@ import { cn } from "@/lib/utils";
 
 const processSteps = [
   {
-    title: "WEDDINGS",
-    subtitle: "Heritage & Union",
-    description: "Creating magical moments for your special day with exceptional attention to detail and creative production.",
+    title: "DIALOGUE",
+    subtitle: "Consultation & Vision",
+    description: "Every masterpiece begins with a conversation. We delve deep into your desires to capture the unique DNA of your celebration.",
     image: "https://images.unsplash.com/photo-1511551203524-9a24350a5771?auto=format&fit=crop&q=80",
   },
   {
-    title: "CORPORATE",
-    subtitle: "Brand Excellence",
-    description: "Professional execution of corporate galas, seminars, and brand activations with surgical precision.",
+    title: "ARCHITECTURE",
+    subtitle: "Spatial Design & Concept",
+    description: "Our architects of experience map out the sensory flow, translating abstract ideas into tangible blueprints and mood boards.",
     image: "https://images.unsplash.com/photo-1515187029135-18ee286d815b?auto=format&fit=crop&q=80",
   },
   {
-    title: "BIRTHDAYS",
-    subtitle: "Private Milestones",
-    description: "From intimate celebrations to grand birthday events, we thoughtfully curate every element for you.",
+    title: "ORCHESTRATION",
+    subtitle: "Production & Execution",
+    description: "With surgical precision, our team coordinates every element—from acoustics to luminance—ensuring a flawless symphony.",
     image: "https://images.unsplash.com/photo-1492684223066-81342ee5ff30?auto=format&fit=crop&q=80",
   },
   {
-    title: "PRIVATE",
-    subtitle: "Bespoke Soirées",
-    description: "Whether it's a baby shower, house party, or cultural festival, we deliver remarkable experiences.",
+    title: "LEGACY",
+    subtitle: "Archiving & Future",
+    description: "The encore is just the beginning. We archive your sensory records in The Vault, securing the legacy of your celebration.",
     image: "https://images.unsplash.com/photo-1514525253361-901b0f557342?auto=format&fit=crop&q=80",
   },
 ];

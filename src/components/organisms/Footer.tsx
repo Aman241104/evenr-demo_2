@@ -3,9 +3,9 @@
 import React from "react";
 import { OrnateLogo } from "@/components/atoms/OrnateLogo";
 import { MagneticButton } from "@/components/atoms/MagneticButton";
-import { Instagram, Linkedin, Facebook, ArrowUpRight } from "lucide-react";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
+import Link from "next/link";
 
 const footerLinks = [
   {
@@ -56,21 +56,26 @@ export const Footer = () => {
         <div className="lg:col-span-5">
           <OrnateLogo light className="items-start text-left mb-12 scale-110 -ml-4" />
           <p className="text-secondary/40 font-light leading-relaxed text-lg max-w-sm mb-12 italic">
-            "Dedicated to turning life’s special moments into unforgettable experiences with creativity, precision, and professionalism."
+            {'"Dedicated to turning life\'s special moments into unforgettable experiences with creativity, precision, and professionalism."'}
           </p>
           
           <div className="flex gap-4">
-            {["Instagram", "LinkedIn", "Facebook"].map((social) => (
-              <a 
-                key={social}
-                href="#" 
+            {[
+              { name: "Instagram", href: "https://instagram.com/zingblissevents" },
+              { name: "LinkedIn", href: "https://linkedin.com/company/zingbliss" },
+              { name: "Facebook", href: "https://facebook.com/zingblissevents" }
+            ].map((social) => (
+              <a
+                key={social.name}
+                href={social.href}
+                target="_blank"
+                rel="noopener noreferrer"
                 className="text-[8px] tracking-[0.4em] uppercase border border-secondary/10 px-6 py-3 rounded-full hover:bg-secondary hover:text-primary transition-all duration-500 cursor-pointer"
               >
-                {social}
+                {social.name}
               </a>
             ))}
-          </div>
-        </div>
+          </div>        </div>
 
         {/* Center/Right: Navigation - Asymmetrical */}
         <div className="lg:col-span-7 grid grid-cols-1 md:grid-cols-3 gap-12">
@@ -82,13 +87,13 @@ export const Footer = () => {
               <ul className="space-y-6">
                 {section.links.map((link) => (
                   <li key={link.name}>
-                    <a 
+                    <Link
                       href={link.href}
                       className="text-xs font-light text-secondary/40 hover:text-secondary transition-all inline-flex items-center gap-2 group hover:translate-x-2 cursor-pointer"
                     >
                       <span className="opacity-0 group-hover:opacity-100 transition-opacity">/</span>
                       {link.name}
-                    </a>
+                    </Link>
                   </li>
                 ))}
               </ul>
@@ -102,11 +107,11 @@ export const Footer = () => {
             <p className="text-sm font-light text-secondary/40 mb-12 max-w-[200px]">
               Our concierge is active across all global timezones.
             </p>
-            <a href="/contact">
+            <Link href="/contact">
               <MagneticButton className="bg-secondary text-primary px-10 py-4 text-[8px] tracking-[0.5em] cursor-pointer">
                 START THE DIALOGUE
               </MagneticButton>
-            </a>
+            </Link>
           </div>
         </div>
 
@@ -124,8 +129,8 @@ export const Footer = () => {
               © 2026 ZING BLISS EVENTS. ALL RIGHTS RESERVED.
             </p>
             <div className="flex gap-8">
-              <a href="#" className="text-[8px] tracking-[0.4em] uppercase text-secondary/20 hover:text-accent">Discretion Policy</a>
-              <a href="#" className="text-[8px] tracking-[0.4em] uppercase text-secondary/20 hover:text-accent">Terms of Orchestration</a>
+              <Link href="/privacy" className="text-[8px] tracking-[0.4em] uppercase text-secondary/20 hover:text-accent cursor-pointer transition-colors">Discretion Policy</Link>
+              <Link href="/terms" className="text-[8px] tracking-[0.4em] uppercase text-secondary/20 hover:text-accent cursor-pointer transition-colors">Terms of Orchestration</Link>
             </div>
           </div>
         </div>
