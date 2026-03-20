@@ -21,7 +21,11 @@ export const MagneticButton: React.FC<MagneticButtonProps> = ({
     const button = buttonRef.current;
     if (!button) return;
 
+    // Detect touch device
+    const isTouch = window.matchMedia("(pointer: coarse)").matches;
+
     const handleMouseMove = (e: MouseEvent) => {
+      if (isTouch) return;
       const { clientX, clientY } = e;
       const { left, top, width, height } = button.getBoundingClientRect();
       const x = (clientX - (left + width / 2)) * (strength / 100);
@@ -36,6 +40,7 @@ export const MagneticButton: React.FC<MagneticButtonProps> = ({
     };
 
     const handleMouseEnter = () => {
+      if (isTouch) return;
       gsap.to(button, {
         scale: 1.05,
         boxShadow: "0 20px 40px rgba(0, 75, 35, 0.15), inset 0 1px 1px rgba(255, 255, 255, 0.2)",
@@ -45,6 +50,7 @@ export const MagneticButton: React.FC<MagneticButtonProps> = ({
     };
 
     const handleMouseLeave = () => {
+      if (isTouch) return;
       gsap.to(button, {
         x: 0,
         y: 0,
@@ -55,9 +61,11 @@ export const MagneticButton: React.FC<MagneticButtonProps> = ({
       });
     };
 
-    button.addEventListener("mousemove", handleMouseMove);
-    button.addEventListener("mouseleave", handleMouseLeave);
-    button.addEventListener("mouseenter", handleMouseEnter);
+    if (!isTouch) {
+      button.addEventListener("mousemove", handleMouseMove);
+      button.addEventListener("mouseleave", handleMouseLeave);
+      button.addEventListener("mouseenter", handleMouseEnter);
+    }
 
     return () => {
       button.removeEventListener("mousemove", handleMouseMove);

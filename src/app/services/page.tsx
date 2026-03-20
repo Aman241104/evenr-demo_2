@@ -10,27 +10,27 @@ import { cn } from "@/lib/utils";
 
 const processSteps = [
   {
-    title: "The Dialogue",
-    subtitle: "Inquiry & Visioning",
-    description: "Our process begins with an intimate conversation to understand your aesthetic DNA and core objectives.",
+    title: "WEDDINGS",
+    subtitle: "Heritage & Union",
+    description: "Creating magical moments for your special day with exceptional attention to detail and creative production.",
     image: "https://images.unsplash.com/photo-1511551203524-9a24350a5771?auto=format&fit=crop&q=80",
   },
   {
-    title: "The Blueprint",
-    subtitle: "Design & Curation",
-    description: "We translate your vision into a high-fidelity event blueprint, from spatial architecture to sensory details.",
+    title: "CORPORATE",
+    subtitle: "Brand Excellence",
+    description: "Professional execution of corporate galas, seminars, and brand activations with surgical precision.",
     image: "https://images.unsplash.com/photo-1515187029135-18ee286d815b?auto=format&fit=crop&q=80",
   },
   {
-    title: "The Orchestration",
-    subtitle: "Execution & Management",
-    description: "Our expert team manages every moving part with surgical precision, ensuring a flawless and stress-free event.",
+    title: "BIRTHDAYS",
+    subtitle: "Private Milestones",
+    description: "From intimate celebrations to grand birthday events, we thoughtfully curate every element for you.",
     image: "https://images.unsplash.com/photo-1492684223066-81342ee5ff30?auto=format&fit=crop&q=80",
   },
   {
-    title: "The Encore",
-    subtitle: "Reflection & Legacy",
-    description: "We document the magic and ensure the impact of your event lasts long after the final curtain call.",
+    title: "PRIVATE",
+    subtitle: "Bespoke Soirées",
+    description: "Whether it's a baby shower, house party, or cultural festival, we deliver remarkable experiences.",
     image: "https://images.unsplash.com/photo-1514525253361-901b0f557342?auto=format&fit=crop&q=80",
   },
 ];

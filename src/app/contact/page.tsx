@@ -77,7 +77,6 @@ export default function ContactPage() {
                   <div>
                     <h4 className="font-serif text-lg text-primary mb-2">Global HQ</h4>
                     <p className="text-primary/60 font-light text-sm leading-relaxed">
-                      123 Prestige Avenue, Suite 500<br />
                       Dubai Design District, UAE
                     </p>
                   </div>
@@ -90,7 +89,7 @@ export default function ContactPage() {
                   <div>
                     <h4 className="font-serif text-lg text-primary mb-2">General Inquiries</h4>
                     <p className="text-primary/60 font-light text-sm leading-relaxed">
-                      concierge@zingbliss.events
+                      info@zingblissevents.com
                     </p>
                   </div>
                 </div>

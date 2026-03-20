@@ -39,77 +39,113 @@ export default function QuizPage() {
   const [currentStep, setCurrentStep] = useState(0);
   const [selections, setSelections] = useState<string[]>([]);
   const [isFinished, setIsFinished] = useState(false);
+  const [circles, setCircles] = useState<{ x: number, y: number, id: number }[]>([]);
+  
   const quizRef = useRef<HTMLDivElement>(null);
 
-  const handleSelect = (dna: string) => {
-    const newSelections = [...selections, dna];
-    setSelections(newSelections);
+  const handleSelect = (dna: string, e: React.MouseEvent) => {
+    // Add Marker Circle
+    const rect = e.currentTarget.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    
+    const newCircle = { x, y, id: Date.now() };
+    setCircles([...circles, newCircle]);
 
-    if (currentStep < quizQuestions.length - 1) {
-      gsap.to(".quiz-card", {
-        opacity: 0,
-        x: -50,
-        duration: 0.4,
-        onComplete: () => {
-          setCurrentStep(currentStep + 1);
-          gsap.fromTo(".quiz-card", { opacity: 0, x: 50 }, { opacity: 1, x: 0, duration: 0.4 });
-        }
-      });
-    } else {
-      setIsFinished(true);
-    }
+    setTimeout(() => {
+      const newSelections = [...selections, dna];
+      setSelections(newSelections);
+
+      if (currentStep < quizQuestions.length - 1) {
+        gsap.to(".quiz-card", {
+          opacity: 0,
+          x: -50,
+          duration: 0.4,
+          onComplete: () => {
+            setCurrentStep(currentStep + 1);
+            setCircles([]);
+            gsap.fromTo(".quiz-card", { opacity: 0, x: 50 }, { opacity: 1, x: 0, duration: 0.4 });
+          }
+        });
+      } else {
+        setIsFinished(true);
+      }
+    }, 600); // Wait for circle animation
   };
 
   const resetQuiz = () => {
     setCurrentStep(0);
     setSelections([]);
+    setCircles([]);
     setIsFinished(false);
   };
 
   return (
-    <main ref={quizRef} className="bg-secondary min-h-screen flex items-center justify-center pt-24 px-6">
-      <div className="max-w-4xl w-full">
+    <main ref={quizRef} className="bg-secondary min-h-screen flex items-center justify-center pt-24 px-6 relative overflow-hidden">
+      {/* Background Watermark */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-[20vw] font-serif text-primary opacity-[0.02] select-none pointer-events-none">
+        ALCHEMY
+      </div>
+
+      <div className="max-w-4xl w-full relative z-10">
         {!isFinished ? (
           <div className="quiz-card">
-            <div className="text-center mb-12">
-              <span className="text-accent text-[10px] tracking-[0.4em] uppercase mb-4 block">
-                Aesthetic Alchemy — Question 0{currentStep + 1}
+            <div className="text-center mb-16">
+              <span className="text-accent text-[10px] tracking-[0.5em] uppercase mb-4 block font-light">
+                Sensory Analysis — 0{currentStep + 1}
               </span>
-              <TextReveal 
-                text={quizQuestions[currentStep].question} 
-                className="text-4xl md:text-6xl font-serif text-primary"
-              />
+              <h2 className="text-4xl md:text-7xl font-serif text-primary mb-4 leading-tight">
+                {quizQuestions[currentStep].question}
+              </h2>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-12 lg:gap-16">
               {quizQuestions[currentStep].options.map((option, idx) => (
                 <div 
                   key={idx}
-                  onClick={() => handleSelect(option.dna)}
-                  className="relative aspect-video rounded-sm overflow-hidden cursor-pointer group"
+                  onClick={(e) => handleSelect(option.dna, e)}
+                  className="relative aspect-[4/5] rounded-sm overflow-hidden cursor-none group"
                 >
-                  <img 
-                    src={option.image} 
+                  <img
+                    src={option.image}
                     alt={option.label}
-                    className="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110"
-                  />
-                  <div className="absolute inset-0 bg-primary/40 group-hover:bg-primary/20 transition-all duration-500" />
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <span className="text-secondary text-2xl font-serif tracking-widest uppercase opacity-0 group-hover:opacity-100 transition-opacity translate-y-4 group-hover:translate-y-0 duration-500">
+                    className="absolute inset-0 w-full h-full object-cover transition-transform duration-[2s] group-hover:scale-110 lg:grayscale lg:group-hover:grayscale-0"
+                  />                  <div className="absolute inset-0 bg-primary/20 group-hover:bg-transparent transition-all duration-1000" />
+                  
+                  <div className="absolute inset-0 flex flex-col items-center justify-center p-8 text-center border border-secondary/10">
+                    <span className="text-secondary text-2xl font-serif tracking-widest uppercase opacity-100 lg:opacity-0 lg:group-hover:opacity-100 transition-all lg:translate-y-4 lg:group-hover:translate-y-0 duration-700 mix-blend-difference">
                       {option.label}
                     </span>
                   </div>
+
+                  {/* Marker Circle Overlay */}
+                  {circles.length > 0 && (
+                    <svg className="absolute inset-0 w-full h-full pointer-events-none z-30">
+                      {circles.map(c => (
+                        <circle 
+                          key={c.id}
+                          cx={c.x} 
+                          cy={c.y} 
+                          r="40" 
+                          fill="none" 
+                          stroke="#D4AF37" 
+                          strokeWidth="2" 
+                          className="animate-marker-draw"
+                        />
+                      ))}
+                    </svg>
+                  )}
                 </div>
               ))}
             </div>
 
-            <div className="mt-12 flex justify-center gap-2">
+            <div className="mt-16 flex justify-center gap-4">
               {quizQuestions.map((_, idx) => (
                 <div 
                   key={idx}
                   className={cn(
-                    "h-1 transition-all duration-500 rounded-full",
-                    idx === currentStep ? "w-12 bg-primary" : "w-4 bg-primary/10"
+                    "h-[1px] transition-all duration-700",
+                    idx === currentStep ? "w-16 bg-primary" : "w-8 bg-primary/10"
                   )}
                 />
               ))}
@@ -117,26 +153,25 @@ export default function QuizPage() {
           </div>
         ) : (
           <div className="text-center animate-fade-in">
-            <span className="text-accent text-[10px] tracking-[0.4em] uppercase mb-4 block">
-              Your Event DNA Result
+            <span className="text-accent text-[10px] tracking-[0.5em] uppercase mb-6 block font-light">
+              Your Aesthetic Result
             </span>
-            <TextReveal 
-              text={`THE ${selections.join(" ").toUpperCase()}`} 
-              className="text-5xl md:text-8xl font-serif text-primary mb-8"
-            />
-            <p className="text-primary/60 max-w-lg mx-auto mb-12 font-light leading-relaxed">
-              Based on your aesthetic choices, your event archetype is rooted in a blend of {selections[0].toLowerCase()} grandeur and {selections[2].toLowerCase()} sophistication.
+            <h2 className="text-5xl md:text-9xl font-serif text-primary mb-12 leading-none uppercase">
+              The <span className="italic">{selections.join(" ")}</span> <br /> Archetype
+            </h2>
+            <p className="text-primary/60 max-w-xl mx-auto mb-16 font-light leading-relaxed text-lg italic">
+              Based on your sensory selections, your event DNA is rooted in a blend of {selections[0].toLowerCase()} energy and {selections[2].toLowerCase()} sophistication.
             </p>
             
-            <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
-              <MagneticButton className="bg-primary text-secondary px-12 py-4 text-xs tracking-widest uppercase flex items-center gap-3">
-                Download Vision PDF <ArrowRight className="w-4 h-4" />
+            <div className="flex flex-col sm:flex-row gap-8 justify-center items-center">
+              <MagneticButton className="bg-primary text-secondary px-16 py-5 text-[10px] tracking-[0.4em] uppercase flex items-center gap-4 shadow-2xl">
+                Download Vision Dossier <ArrowRight className="w-4 h-4" />
               </MagneticButton>
               <button 
                 onClick={resetQuiz}
-                className="flex items-center gap-2 text-primary/40 hover:text-primary transition-colors text-[10px] tracking-[0.3em] uppercase"
+                className="flex items-center gap-3 text-primary/40 hover:text-primary transition-all text-[10px] tracking-[0.4em] uppercase group"
               >
-                <RotateCcw className="w-3 h-3" /> Start Over
+                <RotateCcw className="w-3 h-3 group-hover:rotate-[-180deg] transition-transform duration-700" /> Start Over
               </button>
             </div>
           </div>

@@ -47,8 +47,11 @@ export const TextReveal: React.FC<TextRevealProps> = ({
         {text.split("").map((char, i) => (
           <span
             key={i}
-            className="char inline-block"
-            style={{ whiteSpace: char === " " ? "pre" : "normal" }}
+            className="char inline-block transition-all duration-700 hover:text-accent hover:scale-110 hover:-translate-y-1"
+            style={{ 
+              whiteSpace: char === " " ? "pre" : "normal",
+              transitionDelay: `${Math.random() * 100}ms`
+            }}
           >
             {char}
           </span>

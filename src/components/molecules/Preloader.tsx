@@ -11,11 +11,20 @@ export const Preloader = ({ children }: { children: React.ReactNode }) => {
   const contentRef = useRef<HTMLDivElement>(null);
   const logoRef = useRef<HTMLDivElement>(null);
 
+  useEffect(() => {
+    // Fallback timeout to ensure the app becomes interactive even if GSAP hangs
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 4500);
+    return () => clearTimeout(timer);
+  }, []);
+
   useGSAP(() => {
+    if (!isLoading) return;
+    
     const tl = gsap.timeline({
       onComplete: () => {
         setIsLoading(false);
-        // Enable scroll or other post-load logic here
       },
     });
 
@@ -51,25 +60,29 @@ export const Preloader = ({ children }: { children: React.ReactNode }) => {
     );
   }, { scope: preloaderRef });
 
+  if (!isLoading) {
+    return <>{children}</>;
+  }
+
   return (
     <>
       <div
         ref={preloaderRef}
-        className="fixed inset-0 z-[100] bg-primary flex items-center justify-center overflow-hidden"
+        className="fixed inset-0 z-[100] bg-primary flex items-center justify-center overflow-hidden px-6"
         style={{ clipPath: "inset(0 0 0 0)" }}
       >
-        <div ref={logoRef}>
-          <OrnateLogo light className="scale-150" />
+        <div ref={logoRef} className="w-full max-w-[280px] md:max-w-none flex justify-center">
+          <OrnateLogo light className="scale-100 md:scale-150 w-full md:w-auto" />
         </div>
         
         {/* Decorative corner accents */}
-        <div className="absolute top-12 left-12 w-12 h-12 border-t border-l border-accent/30" />
-        <div className="absolute top-12 right-12 w-12 h-12 border-t border-r border-accent/30" />
-        <div className="absolute bottom-12 left-12 w-12 h-12 border-b border-l border-accent/30" />
-        <div className="absolute bottom-12 right-12 w-12 h-12 border-b border-r border-accent/30" />
+        <div className="absolute top-6 left-6 md:top-12 md:left-12 w-8 h-8 md:w-12 md:h-12 border-t border-l border-accent/30" />
+        <div className="absolute top-6 right-6 md:top-12 md:right-12 w-8 h-8 md:w-12 md:h-12 border-t border-r border-accent/30" />
+        <div className="absolute bottom-6 left-6 md:bottom-12 md:left-12 w-8 h-8 md:w-12 md:h-12 border-b border-l border-accent/30" />
+        <div className="absolute bottom-6 right-6 md:bottom-12 md:right-12 w-8 h-8 md:w-12 md:h-12 border-b border-r border-accent/30" />
       </div>
 
-      <div ref={contentRef} className={isLoading ? "invisible" : "visible"}>
+      <div ref={contentRef} className="invisible">
         {children}
       </div>
     </>

@@ -14,7 +14,7 @@ const playfair = Playfair_Display({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://zingbliss.events"),
+  metadataBase: new URL("https://zingblissevents.com"),
   title: {
     default: "Zing Bliss Events | Luxury Event Management Prestige Edition",
     template: "%s | Zing Bliss Events"
@@ -24,7 +24,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "en_US",
-    url: "https://zingbliss.events",
+    url: "https://zingblissevents.com",
     siteName: "Zing Bliss Events",
     title: "Zing Bliss Events | Prestige Edition",
     description: "Orchestrating high-fidelity celebrations for the world's most discerning individuals.",

@@ -96,7 +96,7 @@ export const BentoGallery = () => {
                   category={item.category}
                   image={item.image}
                   size="large"
-                  className="h-[500px] lg:h-[600px] grayscale hover:grayscale-0 transition-all duration-1000 shadow-sm"
+                  className="h-[500px] lg:h-[600px] shadow-sm"
                 />
                 
                 <div className="mt-4 flex justify-between items-center px-2 opacity-40">

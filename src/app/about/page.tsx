@@ -13,16 +13,16 @@ gsap.registerPlugin(ScrollTrigger);
 
 const philosophies = [
   {
-    title: "Airy Minimalism",
-    description: "We believe in the power of negative space, allowing every curated detail to breathe and speak with authority.",
+    title: "Our Vision",
+    description: "To achieve excellence in event management through reliability, creativity, and strong business ethics across every project we undertake.",
   },
   {
-    title: "Paper Textures",
-    description: "Our aesthetic is rooted in the tactile and the timeless—drawing inspiration from heritage editorial design.",
+    title: "Our Mission",
+    description: "To inspire, create, and deliver remarkable experiences that leave a lasting impression on every client and guest.",
   },
   {
-    title: "Verdant Accents",
-    description: "Growth, vitality, and prestige. Our signature green is a commitment to the living energy of every celebration.",
+    title: "Our Excellence",
+    description: "Whether it is an intimate celebration or a grand event, we ensure every element is thoughtfully curated with precision.",
   },
 ];
 
@@ -82,10 +82,10 @@ export default function AboutPage() {
             />
             <div className="space-y-8 text-primary/70 font-light leading-relaxed text-lg max-w-md">
               <p>
-                Zing Bliss Events was born from a singular vision: to redefine luxury event management through the lens of high-end editorial aesthetics and surgical precision.
+                Zing Bliss Events is dedicated to turning life’s special moments into unforgettable experiences. We specialize in planning, designing, and executing events with creativity, precision, and professionalism.
               </p>
               <p>
-                Founded by Kamna Udernani, the agency has grown from a boutique planning firm into a global authority on bespoke celebrations, serving a discerning clientele who value discretion, elegance, and the avant-garde.
+                Our team works closely with each client to understand their unique vision and bring it to life with exceptional attention to detail. Whether it is an intimate celebration or a grand event, we ensure every element is thoughtfully curated to create magical moments.
               </p>
             </div>
           </div>

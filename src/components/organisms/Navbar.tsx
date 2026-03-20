@@ -25,16 +25,22 @@ export const Navbar = () => {
   const linksRef = useRef<(HTMLAnchorElement | null)[]>([]);
   const navContainerRef = useRef<HTMLElement>(null);
 
-  // Ghost Logic: Scroll Direction Reveal
+  // Ghost Logic & Dynamic Grain Refinement
   useEffect(() => {
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
+      const velocity = Math.abs(currentScrollY - lastScrollY);
+      
       setIsScrolled(currentScrollY > 50);
 
+      // Dynamic Grain Physics based on velocity
+      const grainIntensity = Math.min(0.15, 0.04 + (velocity / 1000));
+      document.body.style.setProperty("--grain-opacity", grainIntensity.toString());
+
       if (currentScrollY > lastScrollY && currentScrollY > 100) {
-        setIsVisible(false); // Scrolling down
+        setIsVisible(false);
       } else {
-        setIsVisible(true); // Scrolling up
+        setIsVisible(true);
       }
       setLastScrollY(currentScrollY);
     };
@@ -72,6 +78,9 @@ export const Navbar = () => {
     const logo = logoRef.current;
     if (!logo) return;
 
+    const isTouch = window.matchMedia("(pointer: coarse)").matches;
+    if (isTouch) return;
+
     const handleMouseMove = (e: MouseEvent) => {
       const { clientX, clientY } = e;
       const { left, top, width, height } = logo.getBoundingClientRect();
@@ -99,7 +108,7 @@ export const Navbar = () => {
         className={cn(
           "fixed top-0 left-0 w-full z-[100] transition-all duration-700 px-6 py-4 md:px-12 md:py-8",
           isVisible ? "translate-y-0" : "-translate-y-full",
-          isScrolled || isMenuOpen ? "bg-secondary/80 backdrop-blur-xl py-4 md:py-4 border-b border-primary/5 shadow-2xl" : "bg-transparent"
+          isScrolled || isMenuOpen ? "bg-secondary/60 backdrop-blur-xl py-4 md:py-4 border-b border-primary/5 shadow-2xl glass-distort" : "bg-transparent"
         )}
       >
         <div className="max-w-7xl mx-auto flex items-center justify-between">
@@ -117,13 +126,13 @@ export const Navbar = () => {
               <a
                 key={link.name}
                 href={link.href}
-                className="text-[10px] tracking-[0.4em] uppercase text-primary/60 hover:text-primary transition-all hover:tracking-[0.5em] font-light"
+                className="text-[10px] tracking-[0.4em] uppercase text-primary/60 hover:text-primary transition-all hover:tracking-[0.5em] font-light cursor-pointer"
               >
                 {link.name}
               </a>
             ))}
             <a href="/contact">
-              <MagneticButton className="px-8 py-3 text-[10px] tracking-[0.4em] uppercase shadow-lg">
+              <MagneticButton className="px-8 py-3 text-[10px] tracking-[0.4em] uppercase shadow-lg cursor-pointer">
                 The Dialogue
               </MagneticButton>
             </a>

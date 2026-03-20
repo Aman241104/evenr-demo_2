@@ -1,12 +1,13 @@
 "use client";
 
 import React, { useRef } from "react";
-import { TextReveal } from "@/components/atoms/TextReveal";
+import { GlitchText } from "@/components/atoms/GlitchText";
 import { MagneticButton } from "@/components/atoms/MagneticButton";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 
-import { TechnicalAnnotation, BlueprintGrid } from "@/components/atoms/TechnicalDetails";
+import { TechnicalAnnotation } from "@/components/atoms/TechnicalDetails";
+import { GenerativeGrid } from "@/components/atoms/GenerativeGrid";
 
 export const Hero = () => {
   const heroRef = useRef<HTMLDivElement>(null);
@@ -54,7 +55,7 @@ export const Hero = () => {
       ref={heroRef}
       className="relative min-h-screen flex flex-col justify-center overflow-hidden bg-secondary px-6 md:px-12 py-32"
     >
-      <BlueprintGrid />
+      <GenerativeGrid />
       
       {/* Cinematic Lens Flare Overlay */}
       <div className="absolute top-0 left-0 w-full h-full pointer-events-none z-20 opacity-30 mix-blend-screen bg-[radial-gradient(circle_at_20%_20%,rgba(212,175,55,0.15)_0%,transparent_40%),radial-gradient(circle_at_80%_80%,rgba(0,75,35,0.1)_0%,transparent_50%)]" />
@@ -73,45 +74,47 @@ export const Hero = () => {
       />
 
       {/* Background Editorial Letter */}
-      <div className="bg-letter absolute top-0 right-0 text-[60vw] font-serif leading-none text-primary opacity-[0.05] select-none pointer-events-none translate-x-1/4 -translate-y-1/4">
+      <div className="bg-letter absolute top-0 right-0 text-[80vw] md:text-[60vw] font-serif leading-none text-primary opacity-[0.03] md:opacity-[0.05] select-none pointer-events-none translate-x-1/3 md:translate-x-1/4 -translate-y-1/4">
         Z
       </div>
 
       <div className="max-w-7xl mx-auto w-full grid grid-cols-1 lg:grid-cols-12 gap-12 items-center relative z-10">
         {/* Text Content - Offset Editorial Layout */}
         <div className="lg:col-span-7">
-          <span className="text-accent text-[10px] tracking-[0.5em] uppercase mb-8 block font-light animate-fade-in">
+          <span className="text-accent text-[8px] md:text-[10px] tracking-[0.3em] md:tracking-[0.5em] uppercase mb-6 md:mb-8 block font-light animate-fade-in">
             Est. 2011 — Prestige Edition
           </span>
           
           <div className="relative">
             <h1 
               ref={headlineRef}
-              className="text-prestige text-5xl md:text-8xl lg:text-[9vw] leading-[0.85] text-primary mb-12 mix-blend-multiply transition-all duration-100 ease-out"
+              className="text-prestige text-4xl sm:text-6xl md:text-8xl lg:text-[9vw] leading-[0.9] md:leading-[0.85] text-primary mb-8 md:mb-12 mix-blend-multiply transition-all duration-100 ease-out"
             >
               <div className="overflow-hidden">
-                <TextReveal text="ORCHESTRATING" stagger={0.05} />
+                <GlitchText text="ORCHESTRATING" />
               </div>
               <div className="md:ml-24 overflow-hidden">
-                <TextReveal text="THE SUBLIME" stagger={0.05} />
+                <GlitchText text="THE SUBLIME" />
               </div>
             </h1>
           </div>
 
-          <p className="text-primary/70 text-lg md:text-xl font-light leading-relaxed max-w-lg mb-16 animate-fade-in delay-700">
-            Bespoke event management for high-net-worth individuals who value <span className="italic font-serif text-primary">discretion</span> and surgical precision.
+          <p className="text-primary/70 text-base md:text-xl font-light leading-relaxed max-w-lg mb-12 md:mb-16 animate-fade-in delay-700">
+            Dedicated to turning life’s special moments into <span className="italic font-serif text-primary">unforgettable experiences</span> through creativity, precision, and surgical professionalism.
           </p>
 
-          <div className="flex flex-col sm:flex-row gap-8 items-start opacity-0 animate-fade-in fill-mode-forwards delay-1000">
-            <MagneticButton className="bg-primary text-secondary px-12 py-5 text-[10px] tracking-[0.4em] uppercase shadow-2xl">
-              Initiate Dialogue
-            </MagneticButton>
-            <div className="group flex items-center gap-4 cursor-pointer">
-              <div className="w-12 h-[1px] bg-primary/20 group-hover:w-20 transition-all duration-500" />
-              <span className="text-[10px] tracking-[0.3em] uppercase text-primary/40 group-hover:text-primary transition-colors">
+          <div className="flex flex-col sm:flex-row gap-6 md:gap-8 items-start opacity-0 animate-fade-in fill-mode-forwards delay-1000">
+            <a href="/contact">
+              <MagneticButton className="bg-primary text-secondary px-10 md:px-12 py-4 md:py-5 text-[9px] md:text-[10px] tracking-[0.3em] md:tracking-[0.4em] uppercase shadow-2xl cursor-pointer">
+                Initiate Dialogue
+              </MagneticButton>
+            </a>
+            <a href="/gallery" className="group flex items-center gap-4 cursor-pointer">
+              <div className="w-10 md:w-12 h-[1px] bg-primary/20 group-hover:w-20 transition-all duration-500" />
+              <span className="text-[9px] md:text-[10px] tracking-[0.3em] uppercase text-primary/40 group-hover:text-primary transition-colors">
                 View Collection
               </span>
-            </div>
+            </a>
           </div>
         </div>
 

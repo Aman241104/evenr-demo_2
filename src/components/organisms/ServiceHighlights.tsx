@@ -11,21 +11,21 @@ const services = [
   {
     title: "WEDDINGS",
     subtitle: "Heritage & Union",
-    description: "Bespoke destination weddings and heritage-inspired celebrations that tell your unique love story across borders.",
+    description: "Our team handles the entire event production process with precision and creativity, creating magical moments for your special day.",
     image: "https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&q=80",
     side: "left",
   },
   {
     title: "CORPORATE",
     subtitle: "Brand Orchestration",
-    description: "High-fidelity brand activations, galas, and global business summits executed with surgical precision and artistic flair.",
+    description: "Achieving excellence in corporate event management through reliability, creativity, and strong business ethics.",
     image: "https://images.unsplash.com/photo-1505373630103-f21ee09d9a98?auto=format&fit=crop&q=80",
     side: "right",
   },
   {
-    title: "PRIVATE",
-    subtitle: "Intimate Soirées",
-    description: "Exquisite birthday celebrations and private milestones designed for the world's most discerning hosts.",
+    title: "CELEBRATIONS",
+    subtitle: "Intimate & Cultural",
+    description: "From birthdays to festivals and house parties, every element is curated to leave a lasting impression on your guests.",
     image: "https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?auto=format&fit=crop&q=80",
     side: "left",
   },
@@ -33,19 +33,19 @@ const services = [
 
 export const ServiceHighlights = () => {
   return (
-    <section className="bg-secondary/30 relative py-48 px-6 md:px-12 overflow-hidden">
+    <section className="bg-secondary/30 relative py-24 md:py-48 px-6 md:px-12 overflow-hidden">
       <div className="max-w-7xl mx-auto">
-        <div className="mb-48 text-center md:text-left">
-          <span className="text-accent text-[10px] tracking-[0.5em] uppercase mb-6 block font-light">
+        <div className="mb-24 md:mb-48 text-center md:text-left">
+          <span className="text-accent text-[10px] tracking-[0.5em] uppercase mb-4 md:mb-6 block font-light">
             02 — The Spectrum
           </span>
-          <h2 className="text-5xl md:text-9xl font-serif text-primary leading-none">
+          <h2 className="text-4xl md:text-9xl font-serif text-primary leading-tight md:leading-none">
             OUR <span className="italic">CURATED</span> <br />
             <span className="md:ml-48">OFFERINGS</span>
           </h2>
         </div>
 
-        <div className="space-y-64 md:space-y-96">
+        <div className="space-y-32 md:space-y-96">
           {services.map((service, index) => (
             <ServiceSection key={index} service={service} index={index} />
           ))}
@@ -99,7 +99,7 @@ const ServiceSection = ({ service, index }: { service: any, index: number }) => 
           {service.description}
         </p>
         
-        <MagneticButton className="bg-transparent border border-primary text-primary px-10 py-4 text-[8px] tracking-[0.4em] uppercase hover:bg-primary hover:text-secondary">
+        <MagneticButton className="bg-transparent border border-primary text-primary px-10 py-4 text-[8px] tracking-[0.4em] uppercase hover:bg-primary hover:text-secondary cursor-pointer">
           Request Specification
         </MagneticButton>
       </div>
