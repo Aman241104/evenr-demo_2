@@ -60,29 +60,41 @@ export const Preloader = ({ children }: { children: React.ReactNode }) => {
     );
   }, { scope: preloaderRef });
 
-  if (!isLoading) {
-    return <>{children}</>;
-  }
-
   return (
     <>
-      <div
-        ref={preloaderRef}
-        className="fixed inset-0 z-[100] bg-primary flex items-center justify-center overflow-hidden px-6"
-        style={{ clipPath: "inset(0 0 0 0)" }}
-      >
-        <div ref={logoRef} className="w-full max-w-[280px] md:max-w-none flex justify-center">
-          <OrnateLogo light className="scale-100 md:scale-150 w-full md:w-auto" />
+      {isLoading && (
+        <div
+          ref={preloaderRef}
+          className="fixed inset-0 z-[100] bg-primary flex flex-col items-center justify-center overflow-hidden px-6"
+          style={{ clipPath: "inset(0 0 0 0)" }}
+        >
+          <div ref={logoRef} className="w-full max-w-[280px] md:max-w-none flex flex-col items-center justify-center gap-12">
+            <OrnateLogo light className="scale-100 md:scale-150 w-full md:w-auto" />
+            
+            {/* Technical Progress Scanline */}
+            <div className="w-48 md:w-64 h-[1px] bg-secondary/10 relative overflow-hidden">
+              <div className="absolute inset-y-0 left-0 bg-accent w-full -translate-x-full animate-[scan_3s_ease-in-out_infinite]" />
+            </div>
+            
+            <div className="flex flex-col items-center gap-2">
+              <span className="text-secondary/40 text-[6px] md:text-[8px] tracking-[0.6em] uppercase font-light animate-pulse">
+                Orchestrating Sensory Records
+              </span>
+              <span className="text-accent text-[6px] tracking-[0.4em] uppercase font-mono">
+                ZB_INIT_V4.0
+              </span>
+            </div>
+          </div>
+          
+          {/* Decorative corner accents */}
+          <div className="absolute top-6 left-6 md:top-12 md:left-12 w-8 h-8 md:w-12 md:h-12 border-t border-l border-accent/20" />
+          <div className="absolute top-6 right-6 md:top-12 md:right-12 w-8 h-8 md:w-12 md:h-12 border-t border-r border-accent/20" />
+          <div className="absolute bottom-6 left-6 md:bottom-12 md:left-12 w-8 h-8 md:w-12 md:h-12 border-b border-l border-accent/20" />
+          <div className="absolute bottom-6 right-6 md:bottom-12 md:right-12 w-8 h-8 md:w-12 md:h-12 border-b border-r border-accent/20" />
         </div>
-        
-        {/* Decorative corner accents */}
-        <div className="absolute top-6 left-6 md:top-12 md:left-12 w-8 h-8 md:w-12 md:h-12 border-t border-l border-accent/30" />
-        <div className="absolute top-6 right-6 md:top-12 md:right-12 w-8 h-8 md:w-12 md:h-12 border-t border-r border-accent/30" />
-        <div className="absolute bottom-6 left-6 md:bottom-12 md:left-12 w-8 h-8 md:w-12 md:h-12 border-b border-l border-accent/30" />
-        <div className="absolute bottom-6 right-6 md:bottom-12 md:right-12 w-8 h-8 md:w-12 md:h-12 border-b border-r border-accent/30" />
-      </div>
+      )}
 
-      <div ref={contentRef} className="invisible">
+      <div ref={contentRef}>
         {children}
       </div>
     </>

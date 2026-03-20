@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useRef } from "react";
-import { TextReveal } from "@/components/atoms/TextReveal";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { Quote } from "lucide-react";
@@ -10,7 +9,7 @@ import { TapeEffect } from "@/components/atoms/AnalogAccents";
 
 const testimonials = [
   {
-    quote: "Zing Bliss didn't just plan a wedding; they orchestrated a masterpiece. Every sensory detail was perfection.",
+    quote: "Zing Bliss turned our vision into a cinematic reality. Every detail of our Verdant Estate union was orchestrated with breathtaking precision.",
     author: "Isabella & Julian Sterling",
     event: "Verdant Estate Wedding",
     pos: "lg:top-0 lg:left-0",
@@ -36,18 +35,24 @@ export const Testimonials = () => {
   const containerRef = useRef<HTMLDivElement>(null);
 
   useGSAP(() => {
-    gsap.from(".testimonial-card", {
-      scrollTrigger: {
-        trigger: containerRef.current,
-        start: "top 70%",
+    gsap.fromTo(".testimonial-card", 
+      {
+        y: 100,
+        opacity: 0,
       },
-      y: 100,
-      opacity: 0,
-      rotate: 0,
-      duration: 1.5,
-      stagger: 0.3,
-      ease: "power4.out",
-    });
+      {
+        scrollTrigger: {
+          trigger: containerRef.current,
+          start: "top 70%",
+        },
+        y: 0,
+        opacity: 1,
+        duration: 1.5,
+        stagger: 0.3,
+        ease: "power4.out",
+        clearProps: "all",
+      }
+    );
   }, { scope: containerRef });
 
   return (
@@ -85,7 +90,7 @@ export const Testimonials = () => {
               <Quote className="w-8 h-8 text-accent/20 mb-8 group-hover:text-accent/40 transition-colors" />
               
               <p className="text-xl md:text-2xl font-serif italic text-primary leading-snug mb-12">
-                "{item.quote}"
+                &quot;{item.quote}&quot;
               </p>
               
               <div className="flex flex-col border-t border-primary/5 pt-8">

@@ -27,18 +27,25 @@ export const TextReveal: React.FC<TextRevealProps> = ({
     const chars = containerRef.current?.querySelectorAll(".char");
     if (!chars) return;
 
-    gsap.from(chars, {
-      scrollTrigger: {
-        trigger: containerRef.current,
-        start: "top 85%",
-        toggleActions: "play none none none",
+    gsap.fromTo(chars, 
+      {
+        y: 100,
+        opacity: 0,
       },
-      y: 100,
-      opacity: 0,
-      duration: duration,
-      stagger: (i) => stagger + Math.random() * 0.05, // Added jitter for human feel
-      ease: "power4.out",
-    });
+      {
+        scrollTrigger: {
+          trigger: containerRef.current,
+          start: "top 85%",
+          toggleActions: "play none none none",
+        },
+        y: 0,
+        opacity: 1,
+        duration: duration,
+        stagger: () => stagger + Math.random() * 0.05, // Added jitter for human feel
+        ease: "power4.out",
+        clearProps: "all",
+      }
+    );
   }, { scope: containerRef });
 
   return (
@@ -50,7 +57,7 @@ export const TextReveal: React.FC<TextRevealProps> = ({
             className="char inline-block transition-all duration-700 hover:text-accent hover:scale-110 hover:-translate-y-1"
             style={{ 
               whiteSpace: char === " " ? "pre" : "normal",
-              transitionDelay: `${Math.random() * 100}ms`
+              transitionDelay: `${(i || 1) * 10}ms`
             }}
           >
             {char}

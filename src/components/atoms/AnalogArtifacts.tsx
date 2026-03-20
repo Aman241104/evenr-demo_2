@@ -15,19 +15,9 @@ export const AnalogArtifacts = () => {
       <div className="artifact absolute bottom-14 right-12 w-48 h-px bg-primary/10 rotate-[-15deg]" data-speed="0.12" />
 
       {/* Floating Dust Particles (Large & Slow) */}
-      {[...Array(3)].map((_, i) => (
-        <div 
-          key={i}
-          className="artifact absolute rounded-full bg-primary/5 blur-sm"
-          style={{ 
-            width: `${Math.random() * 200 + 100}px`,
-            height: `${Math.random() * 200 + 100}px`,
-            left: `${Math.random() * 100}%`,
-            top: `${Math.random() * 100}%`,
-          }}
-          data-speed={Math.random() * 0.1 + 0.05}
-        />
-      ))}
+      <div className="artifact absolute rounded-full bg-primary/5 blur-sm" style={{ width: '150px', height: '150px', left: '20%', top: '30%' }} data-speed="0.08" />
+      <div className="artifact absolute rounded-full bg-primary/5 blur-sm" style={{ width: '250px', height: '250px', left: '70%', top: '60%' }} data-speed="0.12" />
+      <div className="artifact absolute rounded-full bg-primary/5 blur-sm" style={{ width: '180px', height: '180px', left: '40%', top: '80%' }} data-speed="0.06" />
     </div>
   );
 };
@@ -45,7 +35,7 @@ export const useArtifactMotion = () => {
           end: "bottom bottom",
           scrub: true,
         },
-        y: (i, target) => window.innerHeight * speed,
+        y: () => window.innerHeight * speed,
         ease: "none",
       });
     });

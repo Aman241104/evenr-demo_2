@@ -1,26 +1,44 @@
 "use client";
 
 import React, { useState, useRef, useEffect } from "react";
+import Image from "next/image";
 import { TextReveal } from "@/components/atoms/TextReveal";
 import { MagneticButton } from "@/components/atoms/MagneticButton";
 import { OrnateLogo } from "@/components/atoms/OrnateLogo";
+import { cn } from "@/lib/utils";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
-import { Lock, ChevronRight, MessageSquare, FileText, Layout, Clock } from "lucide-react";
-import { cn } from "@/lib/utils";
+import { ChevronRight, MessageSquare, FileText, Layout } from "lucide-react";
 
 export default function VaultPage() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [accessCode, setAccessCode] = useState("");
+  const [error, setError] = useState(false);
   const [mousePos, setMousePos] = useState({ x: 50, y: 50 });
   const dashboardRef = useRef<HTMLDivElement>(null);
   const flashlightRef = useRef<HTMLDivElement>(null);
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
-    if (accessCode.length >= 4) {
+    if (accessCode === "2026") {
       setIsLoggedIn(true);
+      setError(false);
+    } else {
+      setError(true);
+      gsap.to(".vault-login-ui", {
+        keyframes: {
+          x: [-10, 10, -10, 10, 0],
+        },
+        duration: 0.4,
+        ease: "power2.inOut",
+      });
+      setTimeout(() => setError(false), 2000);
     }
+  };
+
+  const handleLogout = () => {
+    setIsLoggedIn(false);
+    setAccessCode("");
   };
 
   useEffect(() => {
@@ -39,13 +57,20 @@ export default function VaultPage() {
 
   useGSAP(() => {
     if (isLoggedIn) {
-      gsap.from(".vault-item", {
-        opacity: 0,
-        y: 20,
-        duration: 0.8,
-        stagger: 0.1,
-        ease: "power2.out",
-      });
+      gsap.fromTo(".vault-item", 
+        {
+          opacity: 0,
+          y: 20,
+        },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.8,
+          stagger: 0.1,
+          ease: "power2.out",
+          clearProps: "all",
+        }
+      );
     }
   }, [isLoggedIn]);
 
@@ -70,10 +95,13 @@ export default function VaultPage() {
           />
 
           {/* Login Form UI */}
-          <div className="relative z-20 max-w-md w-full text-center mix-blend-difference">
+          <div className="vault-login-ui relative z-20 max-w-md w-full text-center mix-blend-difference">
             <OrnateLogo light className="mb-12 scale-125 opacity-50" />
-            <span className="text-accent text-[10px] tracking-[0.4em] uppercase mb-8 block">
-              Authorized Personnel Only
+            <span className={cn(
+              "text-[10px] tracking-[0.4em] uppercase mb-8 block transition-colors duration-500",
+              error ? "text-red-500" : "text-accent"
+            )}>
+              {error ? "Access Denied — Invalid Protocol" : "Authorized Personnel Only"}
             </span>
             <h1 className="text-5xl md:text-7xl font-serif text-secondary mb-12 tracking-widest">
               THE VAULT
@@ -86,7 +114,10 @@ export default function VaultPage() {
                   value={accessCode}
                   onChange={(e) => setAccessCode(e.target.value)}
                   placeholder="Secret Access Code"
-                  className="w-full bg-transparent border-b border-secondary/20 py-4 text-center focus:outline-none focus:border-accent transition-all font-light tracking-[0.5em] text-sm uppercase placeholder:opacity-30"
+                  className={cn(
+                    "w-full bg-transparent border-b py-4 text-center focus:outline-none transition-all font-light tracking-[0.5em] text-sm uppercase placeholder:opacity-30",
+                    error ? "border-red-500/50" : "border-secondary/20 focus:border-accent"
+                  )}
                 />
               </div>
               <div className="flex justify-center">
@@ -100,31 +131,39 @@ export default function VaultPage() {
             </form>
             
             <p className="mt-16 text-secondary/30 text-[8px] tracking-[0.4em] uppercase font-light">
-              Searching for digital legacies...
+              Protocol Hint: 2026
             </p>
           </div>
         </div>
       ) : (
-        /* Dashboard State (Unchanged for now) */
+        /* Dashboard State */
         <div ref={dashboardRef} className="max-w-7xl w-full pt-32 pb-32">
           <header className="flex flex-col md:flex-row justify-between items-start md:items-end mb-24 gap-8">
             <div>
-              <span className="text-accent text-[10px] tracking-[0.4em] uppercase mb-4 block">
-                Active Orchestration
-              </span>
+              <div className="flex items-center gap-4 mb-4">
+                <span className="text-accent text-[10px] tracking-[0.4em] uppercase block font-bold">
+                  Active Project Registry
+                </span>
+                <button 
+                  onClick={handleLogout}
+                  className="text-[8px] tracking-[0.2em] uppercase text-secondary/30 hover:text-accent transition-colors border-l border-secondary/10 pl-4"
+                >
+                  Secure Logout
+                </button>
+              </div>
               <TextReveal 
-                text="STERLING GALA 2026" 
+                text="VERDANT ESTATE 2025" 
                 className="text-4xl md:text-6xl font-serif text-secondary"
               />
             </div>
             <div className="flex gap-4">
-              <div className="vault-item bg-secondary/10 px-6 py-3 rounded-sm border border-secondary/5 text-center">
-                <span className="text-[20px] font-serif block text-accent">142</span>
-                <span className="text-[8px] tracking-[0.2em] uppercase opacity-50">Days Remaining</span>
+              <div className="vault-item bg-secondary/10 px-8 py-4 rounded-sm border border-secondary/5 text-center backdrop-blur-sm">
+                <span className="text-[24px] font-serif block text-accent leading-none mb-1">214</span>
+                <span className="text-[7px] tracking-[0.3em] uppercase opacity-50">Operational Days</span>
               </div>
-              <div className="vault-item bg-secondary/10 px-6 py-3 rounded-sm border border-secondary/5 text-center">
-                <span className="text-[20px] font-serif block text-accent">84%</span>
-                <span className="text-[8px] tracking-[0.2em] uppercase opacity-50">Planning Progress</span>
+              <div className="vault-item bg-secondary/10 px-8 py-4 rounded-sm border border-secondary/5 text-center backdrop-blur-sm">
+                <span className="text-[24px] font-serif block text-accent leading-none mb-1">100%</span>
+                <span className="text-[7px] tracking-[0.3em] uppercase opacity-50">Orchestration Fidelity</span>
               </div>
             </div>
           </header>
@@ -155,10 +194,12 @@ export default function VaultPage() {
               </div>
 
               <div className="vault-item lg:col-span-2 relative aspect-video overflow-hidden rounded-sm border border-secondary/10">
-                <img 
+                <Image 
                   src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&q=80" 
                   alt="Mood Board"
                   className="absolute inset-0 w-full h-full object-cover opacity-40 hover:scale-105 transition-transform duration-[2s]"
+                  width={1200}
+                  height={675}
                 />
                 <div className="absolute inset-0 p-12 flex flex-col justify-end bg-gradient-to-t from-primary to-transparent">
                   <span className="text-accent text-[10px] tracking-[0.4em] uppercase mb-2 block">Interactive</span>
@@ -168,28 +209,28 @@ export default function VaultPage() {
             </div>
 
             <div className="vault-item flex flex-col gap-8">
-              <div className="bg-secondary p-8 text-primary rounded-sm">
-                <div className="flex items-center gap-4 mb-8">
-                  <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center">
-                    <MessageSquare className="w-5 h-5 text-primary" />
+              <div className="bg-secondary p-10 text-primary rounded-sm shadow-xl">
+                <div className="flex items-center gap-4 mb-10">
+                  <div className="w-14 h-14 rounded-full bg-primary/10 flex items-center justify-center border border-primary/5">
+                    <MessageSquare className="w-6 h-6 text-primary" />
                   </div>
                   <div>
-                    <h4 className="font-serif text-lg leading-tight">Your Digital Concierge</h4>
-                    <span className="text-[8px] tracking-widest uppercase text-primary/40">Always Active</span>
+                    <h4 className="font-serif text-xl leading-tight">Lead Concierge</h4>
+                    <span className="text-[9px] tracking-[0.4em] uppercase text-primary/40 font-bold">Authorized Access</span>
                   </div>
                 </div>
-                <div className="space-y-4 mb-8">
-                  <div className="bg-primary/5 p-3 rounded-sm text-xs font-light leading-relaxed">
-                    Hello Sterling Family, the floral samples for the main stage have arrived. Would you like to review them today?
+                <div className="space-y-6 mb-10">
+                  <div className="bg-primary/5 p-5 rounded-sm text-xs font-light leading-relaxed border-l-2 border-accent/30 italic">
+                    &quot;Hello, we have successfully archived the 2025 Verdant Estate records. Every sensory detail and spatial map is now secured in your digital legacy. Would you like to initiate the visioning dialogue for your next celebration?&quot;
                   </div>
                 </div>
-                <div className="relative">
+                <div className="relative group">
                   <input 
                     type="text" 
-                    placeholder="Message your planner..."
-                    className="w-full bg-primary/5 border-b border-primary/10 py-3 pr-8 focus:outline-none focus:border-primary text-xs font-light"
+                    placeholder="Initiate visioning dialogue..."
+                    className="w-full bg-primary/5 border-b border-primary/10 py-4 pr-10 focus:outline-none focus:border-primary text-xs font-light uppercase tracking-widest placeholder:opacity-30 transition-all"
                   />
-                  <ChevronRight className="absolute right-0 top-1/2 -translate-y-1/2 w-4 h-4 opacity-30" />
+                  <ChevronRight className="absolute right-0 top-1/2 -translate-y-1/2 w-5 h-5 opacity-30 group-focus-within:opacity-100 transition-opacity" />
                 </div>
               </div>
             </div>

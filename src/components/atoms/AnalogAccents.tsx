@@ -7,7 +7,7 @@ import { cn } from "@/lib/utils";
 
 interface HandDrawnCircleProps {
   className?: string;
-  trigger?: React.RefObject<any>;
+  trigger?: React.RefObject<HTMLElement | null>;
   color?: string;
   delay?: number;
 }
@@ -58,12 +58,6 @@ export const HandDrawnCircle: React.FC<HandDrawnCircleProps> = ({
         strokeLinecap="round"
         style={{ filter: "url(#rough-edge)" }}
       />
-      <defs>
-        <filter id="rough-edge">
-          <feTurbulence type="fractalNoise" baseFrequency="0.5" numOctaves="3" result="noise" />
-          <feDisplacementMap in="SourceGraphic" in2="noise" scale="2" />
-        </filter>
-      </defs>
     </svg>
   );
 };

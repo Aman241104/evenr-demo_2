@@ -3,6 +3,9 @@
 import React, { useRef } from "react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+gsap.registerPlugin(ScrollTrigger);
 
 export default function Template({ children }: { children: React.ReactNode }) {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -37,6 +40,9 @@ export default function Template({ children }: { children: React.ReactNode }) {
         duration: 0.8,
         ease: "power2.out",
         clearProps: "all",
+        onComplete: () => {
+          ScrollTrigger.refresh();
+        }
       },
       "-=0.6"
     );

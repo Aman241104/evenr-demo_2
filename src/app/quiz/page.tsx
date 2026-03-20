@@ -1,12 +1,11 @@
 "use client";
 
 import React, { useState, useRef } from "react";
-import { TextReveal } from "@/components/atoms/TextReveal";
+import Image from "next/image";
 import { MagneticButton } from "@/components/atoms/MagneticButton";
-import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { cn } from "@/lib/utils";
-import { Check, ArrowRight, RotateCcw } from "lucide-react";
+import { ArrowRight, RotateCcw } from "lucide-react";
 
 const quizQuestions = [
   {
@@ -39,36 +38,44 @@ export default function QuizPage() {
   const [currentStep, setCurrentStep] = useState(0);
   const [selections, setSelections] = useState<string[]>([]);
   const [isFinished, setIsFinished] = useState(false);
+  const [isTransitioning, setIsTransitioning] = useState(false);
   const [circles, setCircles] = useState<{ x: number, y: number, id: number }[]>([]);
+  const idCounter = useRef(0);
   
   const quizRef = useRef<HTMLDivElement>(null);
 
   const handleSelect = (dna: string, e: React.MouseEvent) => {
+    if (isTransitioning || isFinished) return;
+    setIsTransitioning(true);
+
     // Add Marker Circle
     const rect = e.currentTarget.getBoundingClientRect();
     const x = e.clientX - rect.left;
     const y = e.clientY - rect.top;
     
-    const newCircle = { x, y, id: Date.now() };
+    const newCircle = { x, y, id: idCounter.current++ };
     setCircles([...circles, newCircle]);
 
     setTimeout(() => {
       const newSelections = [...selections, dna];
-      setSelections(newSelections);
-
+      
       if (currentStep < quizQuestions.length - 1) {
         gsap.to(".quiz-card", {
           opacity: 0,
           x: -50,
           duration: 0.4,
           onComplete: () => {
+            setSelections(newSelections);
             setCurrentStep(currentStep + 1);
             setCircles([]);
+            setIsTransitioning(false);
             gsap.fromTo(".quiz-card", { opacity: 0, x: 50 }, { opacity: 1, x: 0, duration: 0.4 });
           }
         });
       } else {
+        setSelections(newSelections);
         setIsFinished(true);
+        setIsTransitioning(false);
       }
     }, 600); // Wait for circle animation
   };
@@ -104,12 +111,14 @@ export default function QuizPage() {
                 <div 
                   key={idx}
                   onClick={(e) => handleSelect(option.dna, e)}
-                  className="relative aspect-[4/5] rounded-sm overflow-hidden cursor-none group"
+                  className="relative aspect-[4/5] rounded-sm overflow-hidden cursor-none group hover-trigger"
                 >
-                  <img
+                  <Image
                     src={option.image}
                     alt={option.label}
                     className="absolute inset-0 w-full h-full object-cover transition-transform duration-[2s] group-hover:scale-110 lg:grayscale lg:group-hover:grayscale-0"
+                    width={600}
+                    height={750}
                   />                  <div className="absolute inset-0 bg-primary/20 group-hover:bg-transparent transition-all duration-1000" />
                   
                   <div className="absolute inset-0 flex flex-col items-center justify-center p-8 text-center border border-secondary/10">

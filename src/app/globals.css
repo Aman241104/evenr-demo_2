@@ -77,6 +77,12 @@
   }
 }
 
+@keyframes scan {
+  0% { transform: translateX(-100%); }
+  50% { transform: translateX(100%); }
+  100% { transform: translateX(-100%); }
+}
+
 @keyframes marker-draw {
   from {
     stroke-dasharray: 251;
@@ -107,11 +113,6 @@
       cursor: none;
     }
   }
-}
-
-/* Glass Distortion Utility */
-@utility glass-distort {
-  filter: url(#glass-noise);
 }
 
 .svg-filter-container {

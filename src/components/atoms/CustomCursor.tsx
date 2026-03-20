@@ -10,6 +10,8 @@ export const CustomCursor = () => {
   const labelRef = useRef<HTMLDivElement>(null);
   const [isMobile, setIsMobile] = useState(false);
 
+  const [cursorText, setCursorText] = useState("VIEW");
+
   useEffect(() => {
     const checkMobile = () => {
       setIsMobile(window.innerWidth < 768 || "ontouchstart" in window);
@@ -45,8 +47,10 @@ export const CustomCursor = () => {
       const target = e.target as HTMLElement;
       const hoverable = target.closest("button, a, .hover-trigger");
       const galleryItem = target.closest(".gallery-trigger");
+      const contactTrigger = target.closest('a[href="/contact"], button[type="submit"]');
       
       if (galleryItem) {
+        setCursorText("RECORD");
         gsap.to(follower, {
           scale: 4,
           backgroundColor: "rgba(245, 245, 240, 1)", // Ivory
@@ -55,15 +59,26 @@ export const CustomCursor = () => {
           duration: 0.4,
         });
         gsap.to(label, { opacity: 1, duration: 0.3 });
-      } else if (hoverable) {
+      } else if (contactTrigger) {
+        setCursorText("DIALOGUE");
         gsap.to(follower, {
-          scale: 2.5,
+          scale: 4.5,
           backgroundColor: "white",
           mixBlendMode: "difference",
           border: "none",
           duration: 0.3,
         });
-        gsap.to(label, { opacity: 0, duration: 0.2 });
+        gsap.to(label, { opacity: 1, duration: 0.3, color: "white" });
+      } else if (hoverable) {
+        setCursorText("EXPLORE");
+        gsap.to(follower, {
+          scale: 3.5,
+          backgroundColor: "white",
+          mixBlendMode: "difference",
+          border: "none",
+          duration: 0.3,
+        });
+        gsap.to(label, { opacity: 1, duration: 0.3, color: "white" });
       } else {
         gsap.to(follower, {
           scale: 1,
@@ -101,9 +116,9 @@ export const CustomCursor = () => {
       >
         <span 
           ref={labelRef}
-          className="text-[4px] tracking-[0.2em] uppercase text-primary font-bold opacity-0"
+          className="text-[4px] tracking-[0.3em] uppercase text-primary font-bold opacity-0 transition-colors duration-300"
         >
-          View
+          {cursorText}
         </span>
       </div>
     </>

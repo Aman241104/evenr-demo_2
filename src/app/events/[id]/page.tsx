@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useRef } from "react";
+import Image from "next/image";
 import { TextReveal } from "@/components/atoms/TextReveal";
 import { MaskSlideImage } from "@/components/molecules/MaskSlideImage";
 import { MagneticButton } from "@/components/atoms/MagneticButton";
@@ -50,27 +51,37 @@ export default function EventRecordPage() {
     });
 
     // Reveal Sidebar Specs
-    gsap.from(".spec-item", {
-      scrollTrigger: {
-        trigger: ".event-content",
-        start: "top 80%",
+    gsap.fromTo(".spec-item", 
+      {
+        x: -30,
+        opacity: 0,
       },
-      x: -30,
-      opacity: 0,
-      duration: 0.8,
-      stagger: 0.1,
-      ease: "power2.out",
-    });
+      {
+        scrollTrigger: {
+          trigger: ".event-content",
+          start: "top 80%",
+        },
+        x: 0,
+        opacity: 1,
+        duration: 0.8,
+        stagger: 0.1,
+        ease: "power2.out",
+        clearProps: "all",
+      }
+    );
   }, { scope: containerRef });
 
   return (
     <main ref={containerRef} className="bg-secondary min-h-screen">
       {/* Hero Section */}
       <section className="event-hero relative h-[90vh] overflow-hidden">
-        <img 
+        <Image 
           src={data.heroImage} 
           alt={data.title}
           className="event-hero-img absolute inset-0 w-full h-[130%] object-cover -top-[15%]"
+          width={1920}
+          height={1080}
+          priority
         />
         <div className="absolute inset-0 bg-primary/20" />
         <div className="absolute inset-0 flex flex-col items-center justify-center text-center p-6">
@@ -92,7 +103,7 @@ export default function EventRecordPage() {
             <div className="spec-item">
               <span className="text-accent text-[10px] tracking-[0.4em] uppercase mb-4 block">The Context</span>
               <p className="text-primary text-xl font-serif leading-relaxed italic">
-                "{data.description}"
+                &quot;{data.description}&quot;
               </p>
             </div>
 

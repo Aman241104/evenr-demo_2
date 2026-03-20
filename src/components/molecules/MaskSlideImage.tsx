@@ -14,7 +14,6 @@ interface MaskSlideImageProps {
   alt: string;
   className?: string;
   aspectRatio?: "video" | "square" | "portrait" | "landscape";
-  direction?: "left" | "right" | "up" | "down";
 }
 
 export const MaskSlideImage: React.FC<MaskSlideImageProps> = ({
@@ -22,7 +21,6 @@ export const MaskSlideImage: React.FC<MaskSlideImageProps> = ({
   alt,
   className,
   aspectRatio = "landscape",
-  direction = "right",
 }) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const imageRef = useRef<HTMLDivElement>(null);
@@ -48,14 +46,22 @@ export const MaskSlideImage: React.FC<MaskSlideImageProps> = ({
     tl.fromTo(
       maskRef.current,
       {
-        clipPath: "inset(0 100% 0 0)",
+        clipPath: "inset(0% 100% 0% 0%)",
       },
       {
-        clipPath: "inset(0 0 0 0)",
+        clipPath: "inset(0% 0% 0% 0%)",
         duration: 1.5,
         ease: "power4.inOut",
       }
     );
+
+    // Grayscale Bloom Effect
+    gsap.set(imageRef.current, { filter: "grayscale(100%) contrast(1.1)" });
+    tl.to(imageRef.current, {
+      filter: "grayscale(0%) contrast(1)",
+      duration: 2,
+      ease: "power2.out",
+    }, "-=1.0");
 
     // Image slight scale down for impact
     tl.fromTo(
@@ -68,7 +74,7 @@ export const MaskSlideImage: React.FC<MaskSlideImageProps> = ({
         duration: 2,
         ease: "power2.out",
       },
-      "-=1.2"
+      "-=2.0"
     );
   }, { scope: containerRef });
 

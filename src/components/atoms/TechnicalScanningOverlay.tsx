@@ -1,8 +1,6 @@
 "use client";
 
 import React, { useRef, useEffect, useState } from "react";
-import { useGSAP } from "@gsap/react";
-import gsap from "gsap";
 import { cn } from "@/lib/utils";
 
 interface TechnicalScanningOverlayProps {
@@ -12,7 +10,6 @@ interface TechnicalScanningOverlayProps {
 
 export const TechnicalScanningOverlay: React.FC<TechnicalScanningOverlayProps> = ({ active, title }) => {
   const containerRef = useRef<HTMLDivElement>(null);
-  const scanBarRef = useRef<HTMLDivElement>(null);
   const [metrics, setMetrics] = useState({
     acoustic: 0,
     luminance: 0,
@@ -21,26 +18,19 @@ export const TechnicalScanningOverlay: React.FC<TechnicalScanningOverlayProps> =
   });
 
   // Randomize metrics on mount
+   
+   
   useEffect(() => {
-    setMetrics({
-      acoustic: Math.floor(Math.random() * 40) + 60,
-      luminance: Math.floor(Math.random() * 30) + 70,
-      density: Math.floor(Math.random() * 50) + 50,
-      fidelity: 98,
+    const frame = requestAnimationFrame(() => {
+      setMetrics({
+        acoustic: Math.floor(Math.random() * 40) + 60,
+        luminance: Math.floor(Math.random() * 30) + 70,
+        density: Math.floor(Math.random() * 50) + 50,
+        fidelity: 98,
+      });
     });
+    return () => cancelAnimationFrame(frame);
   }, []);
-
-  useGSAP(() => {
-    if (active) {
-      // Scanning line animation
-      gsap.fromTo(scanBarRef.current, 
-        { left: "0%" }, 
-        { left: "100%", duration: 3, repeat: -1, ease: "none", opacity: 0.5 }
-      );
-    } else {
-      gsap.killTweensOf(scanBarRef.current);
-    }
-  }, [active]);
 
   return (
     <div 
@@ -50,12 +40,6 @@ export const TechnicalScanningOverlay: React.FC<TechnicalScanningOverlayProps> =
         active ? "opacity-100" : "opacity-0"
       )}
     >
-      {/* Scanning Bar */}
-      <div 
-        ref={scanBarRef}
-        className="absolute top-0 bottom-0 w-[1px] bg-secondary/30 shadow-[0_0_15px_rgba(255,255,255,0.2)]"
-      />
-
       {/* Grid Overlay */}
       <div className="absolute inset-0 bg-[linear-gradient(rgba(245,245,240,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(245,245,240,0.03)_1px,transparent_1px)] bg-[size:40px_40px]" />
 

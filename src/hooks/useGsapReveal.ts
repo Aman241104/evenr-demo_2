@@ -17,7 +17,7 @@ interface RevealOptions {
 }
 
 export const useGsapReveal = (options: RevealOptions = {}) => {
-  const elementRef = useRef<any>(null);
+  const elementRef = useRef<HTMLDivElement>(null);
 
   const {
     direction = "up",
@@ -45,21 +45,29 @@ export const useGsapReveal = (options: RevealOptions = {}) => {
       return 0;
     };
 
-    const animation = gsap.from(el, {
-      x: getX(),
-      y: getY(),
-      opacity: 0,
-      duration,
-      delay,
-      stagger,
-      ease: "power3.out",
-      scrollTrigger: {
-        trigger: el,
-        start: triggerStart,
-        toggleActions: scrub ? undefined : "play none none none",
-        scrub,
+    const animation = gsap.fromTo(el, 
+      {
+        x: getX(),
+        y: getY(),
+        opacity: 0,
       },
-    });
+      {
+        x: 0,
+        y: 0,
+        opacity: 1,
+        duration,
+        delay,
+        stagger,
+        ease: "power3.out",
+        clearProps: "all",
+        scrollTrigger: {
+          trigger: el,
+          start: triggerStart,
+          toggleActions: scrub ? undefined : "play none none none",
+          scrub,
+        },
+      }
+    );
 
     return () => {
       if (animation.scrollTrigger) animation.scrollTrigger.kill();

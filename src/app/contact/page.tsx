@@ -35,22 +35,36 @@ export default function ContactPage() {
   };
 
   useGSAP(() => {
-    gsap.from(".contact-info-item", {
-      opacity: 0,
-      y: 20,
-      duration: 0.8,
-      stagger: 0.2,
-      ease: "power2.out",
-    });
+    gsap.fromTo(".contact-info-item", 
+      {
+        opacity: 0,
+        y: 20,
+      },
+      {
+        opacity: 1,
+        y: 0,
+        duration: 0.8,
+        stagger: 0.2,
+        ease: "power2.out",
+        clearProps: "all",
+      }
+    );
 
     if (!isSubmitted) {
-      gsap.from(formRef.current, {
-        opacity: 0,
-        x: 30,
-        duration: 1,
-        delay: 0.5,
-        ease: "power3.out",
-      });
+      gsap.fromTo(formRef.current, 
+        {
+          opacity: 0,
+          x: 30,
+        },
+        {
+          opacity: 1,
+          x: 0,
+          duration: 1,
+          delay: 0.5,
+          ease: "power3.out",
+          clearProps: "all",
+        }
+      );
     }
   }, [isSubmitted]);
 
@@ -66,41 +80,41 @@ export default function ContactPage() {
               </span>
               <TextReveal 
                 text="START YOUR NARRATIVE" 
-                className="text-5xl md:text-7xl font-serif text-primary mb-12"
+                className="text-4xl md:text-7xl font-serif text-primary mb-12"
               />
               
-              <div className="space-y-12">
+              <div className="space-y-8 md:space-y-12">
                 <div className="contact-info-item flex gap-6">
-                  <div className="w-12 h-12 rounded-full border border-primary/10 flex items-center justify-center shrink-0">
-                    <MapPin className="w-4 h-4 text-accent" />
+                  <div className="w-10 h-10 md:w-12 md:h-12 rounded-full border border-primary/10 flex items-center justify-center shrink-0">
+                    <MapPin className="w-3.5 h-3.5 md:w-4 md:h-4 text-accent" />
                   </div>
                   <div>
-                    <h4 className="font-serif text-lg text-primary mb-2">Global HQ</h4>
-                    <p className="text-primary/60 font-light text-sm leading-relaxed">
+                    <h4 className="font-serif text-base md:text-lg text-primary mb-1 md:mb-2">Global HQ</h4>
+                    <p className="text-primary/60 font-light text-xs md:text-sm leading-relaxed">
                       Dubai Design District, UAE
                     </p>
                   </div>
                 </div>
 
                 <div className="contact-info-item flex gap-6">
-                  <div className="w-12 h-12 rounded-full border border-primary/10 flex items-center justify-center shrink-0">
-                    <Mail className="w-4 h-4 text-accent" />
+                  <div className="w-10 h-10 md:w-12 md:h-12 rounded-full border border-primary/10 flex items-center justify-center shrink-0">
+                    <Mail className="w-3.5 h-3.5 md:w-4 md:h-4 text-accent" />
                   </div>
                   <div>
-                    <h4 className="font-serif text-lg text-primary mb-2">General Inquiries</h4>
-                    <p className="text-primary/60 font-light text-sm leading-relaxed">
+                    <h4 className="font-serif text-base md:text-lg text-primary mb-1 md:mb-2">General Inquiries</h4>
+                    <p className="text-primary/60 font-light text-xs md:text-sm leading-relaxed">
                       info@zingblissevents.com
                     </p>
                   </div>
                 </div>
 
                 <div className="contact-info-item flex gap-6">
-                  <div className="w-12 h-12 rounded-full border border-primary/10 flex items-center justify-center shrink-0">
-                    <Clock className="w-4 h-4 text-accent" />
+                  <div className="w-10 h-10 md:w-12 md:h-12 rounded-full border border-primary/10 flex items-center justify-center shrink-0">
+                    <Clock className="w-3.5 h-3.5 md:w-4 md:h-4 text-accent" />
                   </div>
                   <div>
-                    <h4 className="font-serif text-lg text-primary mb-2">Consultation Hours</h4>
-                    <p className="text-primary/60 font-light text-sm leading-relaxed">
+                    <h4 className="font-serif text-base md:text-lg text-primary mb-1 md:mb-2">Consultation Hours</h4>
+                    <p className="text-primary/60 font-light text-xs md:text-sm leading-relaxed">
                       Monday — Friday<br />
                       10:00 AM — 06:00 PM GST
                     </p>
@@ -115,70 +129,75 @@ export default function ContactPage() {
                 <form 
                   ref={formRef}
                   onSubmit={handleSubmit}
-                  className="bg-white/50 backdrop-blur-sm p-8 md:p-16 rounded-sm border border-primary/5"
+                  className="bg-white/50 backdrop-blur-sm p-6 md:p-16 rounded-sm border border-primary/5"
                 >
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-12 mb-12">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 mb-8 md:mb-12">
                     <div className="group">
-                      <label className="text-[10px] tracking-[0.3em] uppercase text-primary/40 block mb-4 transition-colors group-focus-within:text-accent">
+                      <label className="text-[9px] md:text-[10px] tracking-[0.3em] uppercase text-primary/40 block mb-3 md:mb-4 transition-colors group-focus-within:text-accent">
                         Full Name
                       </label>
                       <input 
                         required
                         type="text" 
                         placeholder="Alexander Sterling"
-                        className="w-full bg-transparent border-b border-primary/10 py-2 focus:outline-none focus:border-primary transition-colors font-light text-primary"
+                        className="w-full bg-transparent border-b border-primary/10 py-2 focus:outline-none focus:border-primary transition-colors font-light text-primary text-sm md:text-base"
                       />
                     </div>
                     <div className="group">
-                      <label className="text-[10px] tracking-[0.3em] uppercase text-primary/40 block mb-4 transition-colors group-focus-within:text-accent">
+                      <label className="text-[9px] md:text-[10px] tracking-[0.3em] uppercase text-primary/40 block mb-3 md:mb-4 transition-colors group-focus-within:text-accent">
                         Email Address
                       </label>
                       <input 
                         required
                         type="email" 
                         placeholder="alex@prestige.com"
-                        className="w-full bg-transparent border-b border-primary/10 py-2 focus:outline-none focus:border-primary transition-colors font-light text-primary"
+                        className="w-full bg-transparent border-b border-primary/10 py-2 focus:outline-none focus:border-primary transition-colors font-light text-primary text-sm md:text-base"
                       />
                     </div>
                   </div>
 
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-12 mb-12">
-                    <div className="group">
-                      <label className="text-[10px] tracking-[0.3em] uppercase text-primary/40 block mb-4 transition-colors group-focus-within:text-accent">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 mb-8 md:mb-12">
+                    <div className="group relative">
+                      <label className="text-[9px] md:text-[10px] tracking-[0.3em] uppercase text-primary/40 block mb-3 md:mb-4 transition-colors group-focus-within:text-accent">
                         Event Type
                       </label>
-                      <select className="w-full bg-transparent border-b border-primary/10 py-2 focus:outline-none focus:border-primary transition-colors font-light text-primary appearance-none">
+                      <select className="w-full bg-transparent border-b border-primary/10 py-2 focus:outline-none focus:border-primary transition-colors font-light text-primary appearance-none text-sm md:text-base cursor-pointer">
                         <option>Luxury Wedding</option>
                         <option>Corporate Gala</option>
                         <option>Private Soirée</option>
                         <option>Milestone Celebration</option>
                       </select>
+                      <div className="absolute right-0 bottom-3 pointer-events-none opacity-30">
+                        <svg width="10" height="6" viewBox="0 0 10 6" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <path d="M1 1L5 5L9 1" stroke="currentColor" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round"/>
+                        </svg>
+                      </div>
                     </div>
                     <div className="group">
-                      <label className="text-[10px] tracking-[0.3em] uppercase text-primary/40 block mb-4 transition-colors group-focus-within:text-accent">
+                      <label className="text-[9px] md:text-[10px] tracking-[0.3em] uppercase text-primary/40 block mb-3 md:mb-4 transition-colors group-focus-within:text-accent">
                         Estimated Date
                       </label>
                       <input 
                         type="text" 
                         placeholder="Spring 2026"
-                        className="w-full bg-transparent border-b border-primary/10 py-2 focus:outline-none focus:border-primary transition-colors font-light text-primary"
+                        className="w-full bg-transparent border-b border-primary/10 py-2 focus:outline-none focus:border-primary transition-colors font-light text-primary text-sm md:text-base"
                       />
                     </div>
                   </div>
 
-                  <div className="group mb-16">
-                    <label className="text-[10px] tracking-[0.3em] uppercase text-primary/40 block mb-4 transition-colors group-focus-within:text-accent">
+                  <div className="group mb-12 md:mb-16">
+                    <label className="text-[9px] md:text-[10px] tracking-[0.3em] uppercase text-primary/40 block mb-3 md:mb-4 transition-colors group-focus-within:text-accent">
                       The Vision
                     </label>
                     <textarea 
                       rows={4}
                       placeholder="Tell us about the energy and aesthetic of your event..."
-                      className="w-full bg-transparent border-b border-primary/10 py-2 focus:outline-none focus:border-primary transition-colors font-light text-primary resize-none"
+                      className="w-full bg-transparent border-b border-primary/10 py-2 focus:outline-none focus:border-primary transition-colors font-light text-primary resize-none text-sm md:text-base"
                     />
                   </div>
 
                   <div className="flex justify-end">
-                    <MagneticButton type="submit" className="px-16 py-5 bg-primary text-secondary text-xs tracking-[0.3em] uppercase">
+                    <MagneticButton type="submit" className="w-full md:w-auto px-12 md:px-16 py-4 md:py-5 bg-primary text-secondary text-[10px] md:text-xs tracking-[0.3em] uppercase">
                       Request Consultation
                     </MagneticButton>
                   </div>

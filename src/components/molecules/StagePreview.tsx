@@ -2,7 +2,7 @@
 
 import React, { Suspense, useRef } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
-import { OrbitControls, PerspectiveCamera, Environment, Float, MeshDistortMaterial, Text } from "@react-three/drei";
+import { OrbitControls, PerspectiveCamera, Environment, Float, MeshDistortMaterial } from "@react-three/drei";
 import { TextReveal } from "@/components/atoms/TextReveal";
 import * as THREE from "three";
 

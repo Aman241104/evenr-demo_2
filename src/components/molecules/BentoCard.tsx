@@ -16,6 +16,7 @@ interface BentoCardProps {
   image: string;
   className?: string;
   size?: "small" | "medium" | "large";
+  onClick?: () => void;
 }
 
 export const BentoCard: React.FC<BentoCardProps> = ({
@@ -24,6 +25,7 @@ export const BentoCard: React.FC<BentoCardProps> = ({
   image,
   className,
   size = "medium",
+  onClick,
 }) => {
   const cardRef = useRef<HTMLDivElement>(null);
   const imageRef = useRef<HTMLImageElement>(null);
@@ -32,19 +34,28 @@ export const BentoCard: React.FC<BentoCardProps> = ({
   const [isHovered, setIsHovered] = useState(false);
 
   const sizeClasses = {
-    small: "col-span-1 row-span-1 h-[300px]",
-    medium: "col-span-1 row-span-2 h-[620px]",
-    large: "col-span-2 row-span-2 h-[620px]",
+    small: "col-span-1 row-span-1 h-[400px] md:h-[300px]",
+    medium: "col-span-1 row-span-2 h-[500px] md:h-[620px]",
+    large: "col-span-1 md:col-span-2 row-span-2 h-[500px] md:h-[620px]",
   };
 
   useGSAP(() => {
     const card = cardRef.current;
     if (!card) return;
 
+    const isTouch = window.matchMedia("(pointer: coarse)").matches;
+
     // Bloom Effect: Grayscale to Color
-    gsap.set(imageRef.current, { filter: "grayscale(100%) contrast(1.1)" });
+    if (!isTouch) {
+      gsap.set(imageRef.current, { filter: "grayscale(100%) contrast(1.1)" });
+    } else {
+      gsap.set(imageRef.current, { filter: "grayscale(0%) contrast(1)" });
+      gsap.set(overlayRef.current, { opacity: 0.3 });
+      gsap.set(textRef.current, { opacity: 1, y: -10 });
+    }
 
     const activate = () => {
+      if (isTouch) return;
       setIsHovered(true);
       gsap.to(imageRef.current, {
         filter: "grayscale(0%) contrast(1)",
@@ -65,6 +76,7 @@ export const BentoCard: React.FC<BentoCardProps> = ({
     };
 
     const deactivate = () => {
+      if (isTouch) return;
       setIsHovered(false);
       gsap.to(imageRef.current, {
         filter: "grayscale(100%) contrast(1.1)",
@@ -84,42 +96,40 @@ export const BentoCard: React.FC<BentoCardProps> = ({
     };
 
     // ScrollTrigger fix for touch devices - auto reveal as you scroll
-    const isTouch = window.matchMedia("(pointer: coarse)").matches;
-    let st: any = null;
+    let st: gsap.core.Timeline | null = null;
 
     if (isTouch) {
       st = gsap.timeline({
         scrollTrigger: {
           trigger: card,
-          start: "top 70%",
-          end: "bottom 30%",
-          onEnter: activate,
-          onLeave: deactivate,
-          onEnterBack: activate,
-          onLeaveBack: deactivate,
+          start: "top 80%",
+          end: "bottom 20%",
           toggleActions: "play reverse play reverse"
         }
       });
     }
 
     const handleToggle = () => {
-      if (isTouch) {
-        if (isHovered) deactivate();
-        else activate();
-      }
+      if (onClick) onClick();
     };
 
-    card.addEventListener("mouseenter", activate);
-    card.addEventListener("mouseleave", deactivate);
+    const onEnter = () => !isTouch && activate();
+    const onLeave = () => !isTouch && deactivate();
+
+    card.addEventListener("mouseenter", onEnter);
+    card.addEventListener("mouseleave", onLeave);
     card.addEventListener("click", handleToggle);
 
     return () => {
-      if (st && st.scrollTrigger) st.scrollTrigger.kill();
-      card.removeEventListener("mouseenter", activate);
-      card.removeEventListener("mouseleave", deactivate);
+      if (st) {
+        if (st.scrollTrigger) st.scrollTrigger.kill();
+        st.kill();
+      }
+      card.removeEventListener("mouseenter", onEnter);
+      card.removeEventListener("mouseleave", onLeave);
       card.removeEventListener("click", handleToggle);
     };
-  }, [isHovered]);
+  }, [onClick]);
 
   return (
     <div
