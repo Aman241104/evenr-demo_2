@@ -42,71 +42,67 @@ export const BentoGallery = () => {
 
   return (
     <section ref={sectionRef} className="py-24 md:py-48 px-6 md:px-12 bg-secondary relative overflow-hidden">
-      <div className="absolute top-0 right-0 text-[15vw] font-serif text-primary opacity-[0.03] select-none pointer-events-none rotate-90 origin-top-right">
-        COLLECTION
+      {/* Decorative Background Accent */}
+      <div className="absolute top-0 right-0 text-[12vw] font-serif text-primary opacity-[0.02] select-none pointer-events-none rotate-90 origin-top-right translate-x-1/4">
+        ARCHIVE
       </div>
 
       <div className="max-w-7xl mx-auto">
-        <div className="flex flex-col md:flex-row md:items-start justify-between mb-16 md:mb-32 gap-12 relative">
-          <div className="max-w-3xl relative">
-            <span className="text-accent text-[10px] tracking-[0.5em] uppercase mb-6 block font-light">
-              01 — The Record
-            </span>
-            <div className="relative inline-block">
-              <h2 className="text-4xl md:text-8xl font-serif text-primary mb-6 md:mb-8 leading-[0.9] md:leading-[0.85]">
-                PAST <br />
-                <span className="md:ml-32 italic">ORCHESTRATIONS</span>
-              </h2>
-              {/* Hand Drawn Accent on Header */}
-              <HandDrawnCircle 
-                trigger={sectionRef} 
-                className="w-32 h-32 md:w-48 md:h-48 -top-8 md:-top-12 -right-8 md:-right-12 text-accent/30" 
-                delay={1}
-              />
-            </div>
-          </div>
-          <div className="max-w-xs mt-4 md:mt-32">
-            <p className="text-primary/60 text-sm font-light leading-relaxed border-l border-primary/10 pl-8">
-              A curated selection of sensory experiences, each meticulously engineered to reflect the unique DNA of our clients.
-            </p>
-          </div>
+        <div className="flex flex-col items-center text-center mb-24 md:mb-48" data-gsap-reveal>
+          <span className="text-accent text-[10px] md:text-[12px] tracking-[0.5em] uppercase mb-8 block font-light">
+            The Visual Record
+          </span>
+          <h2 className="text-4xl md:text-8xl font-serif text-primary mb-12 leading-[1.1] font-light max-w-4xl">
+            A CURATED <span className="italic">COLLECTION</span> OF <br />
+            <span className="font-sans uppercase tracking-[0.2em] text-[0.5em] align-middle">Sensory</span> EXPERIENCES
+          </h2>
+          <div className="w-16 h-px bg-primary/20 mb-12" />
+          <p className="max-w-xl text-primary/60 text-sm md:text-base font-light leading-relaxed italic">
+            Each event is a bespoke orchestration, meticulously engineered to reflect the unique DNA of our clients through light, sound, and space.
+          </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-8 md:gap-12 lg:gap-24">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-12 md:gap-24 lg:gap-32 items-start">
           {galleryItems.map((item, index) => {
             return (
               <div 
                 key={index}
                 className={cn(
-                  "relative transition-all duration-700",
-                  index === 0 ? "lg:col-span-8 lg:-mt-12" : "",
-                  index === 1 ? "lg:col-span-4 lg:mt-32" : "",
-                  index === 2 ? "lg:col-span-4 lg:-mt-24" : "",
-                  index === 3 ? "lg:col-span-8 lg:mt-12" : "",
-                  item.offset
+                  "relative group",
+                  index === 0 ? "lg:col-span-7 lg:-mt-24" : "",
+                  index === 1 ? "lg:col-span-5 lg:mt-32" : "",
+                  index === 2 ? "lg:col-span-5 lg:-mt-12" : "",
+                  index === 3 ? "lg:col-span-7 lg:mt-12" : ""
                 )}
               >
-                {/* Tape Effect - Signals human 'pasting' */}
-                {index % 2 === 0 && <TapeEffect className="-top-4 left-1/4 -translate-x-1/2 rotate-[-15deg]" />}
-                {index % 2 !== 0 && <TapeEffect className="-top-4 right-1/4 translate-x-1/2 rotate-[15deg]" />}
+                {/* Editorial Image Container - Arched Geometry */}
+                <div className={cn(
+                  "relative overflow-hidden shadow-[0_30px_60px_rgba(0,0,0,0.05)] transition-all duration-1000 ease-out border border-primary/5",
+                  index % 2 === 0 ? "rounded-t-[1000px]" : "rounded-t-[1000px] rounded-b-[20px]"
+                )}>
+                  <BentoCard
+                    title={item.title}
+                    category={item.category}
+                    image={item.image}
+                    size={item.size}
+                    className="h-[500px] md:h-[600px] lg:h-[800px] border-none shadow-none"
+                  />
+                  
+                  {/* Subtle Grain Overlay on Image */}
+                  <div className="absolute inset-0 pointer-events-none opacity-20 mix-blend-soft-light bg-[url('https://grainy-gradients.vercel.app/noise.svg')]" />
+                </div>
                 
-                <BentoCard
-                  title={item.title}
-                  category={item.category}
-                  image={item.image}
-                  size={item.size}
-                  className="h-[500px] md:h-[600px] lg:h-[750px] shadow-[0_40px_100px_rgba(0,0,0,0.1)] border border-primary/5"
-                />
-                
-                <div className="mt-8 flex justify-between items-end px-4">
-                  <div className="flex flex-col gap-2">
-                    <span className="text-[10px] tracking-[0.4em] uppercase font-bold text-accent">0{index + 1} — Record</span>
-                    <span className="text-[8px] tracking-[0.3em] uppercase italic text-primary/40">Archive Entry #{index + 101}</span>
+                {/* Minimalist Editorial Caption */}
+                <div className="mt-10 flex flex-col items-start px-2">
+                  <div className="flex items-center gap-4 mb-4">
+                    <span className="text-[10px] tracking-[0.4em] uppercase font-bold text-accent">0{index + 1}</span>
+                    <div className="h-px w-8 bg-primary/10" />
+                    <span className="text-[10px] tracking-[0.4em] uppercase font-light text-primary/40">{item.category}</span>
                   </div>
-                  <div className="flex items-center gap-4">
-                    <div className="h-px w-12 bg-primary/10" />
-                    <span className="text-[9px] tracking-[0.4em] uppercase font-light text-primary/60">{item.category}</span>
-                  </div>
+                  <h4 className="text-xl md:text-2xl font-serif tracking-normal text-primary font-light italic">
+                    {item.title}
+                  </h4>
+                  <div className="w-0 h-px bg-accent mt-4 transition-all duration-700 group-hover:w-full opacity-30" />
                 </div>
               </div>
             );

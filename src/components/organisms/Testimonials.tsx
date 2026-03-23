@@ -34,77 +34,55 @@ const testimonials = [
 export const Testimonials = () => {
   const containerRef = useRef<HTMLDivElement>(null);
 
-  useGSAP(() => {
-    gsap.fromTo(".testimonial-card", 
-      {
-        y: 100,
-        opacity: 0,
-      },
-      {
-        scrollTrigger: {
-          trigger: containerRef.current,
-          start: "top 70%",
-        },
-        y: 0,
-        opacity: 1,
-        duration: 1.5,
-        stagger: 0.3,
-        ease: "power4.out",
-        clearProps: "all",
-      }
-    );
-  }, { scope: containerRef });
-
   return (
     <section ref={containerRef} className="py-32 md:py-64 px-6 md:px-12 bg-secondary relative overflow-hidden">
-      {/* Background Decorative Text */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-[40vw] md:text-[25vw] font-serif text-primary opacity-[0.02] select-none pointer-events-none italic">
-        Elegance
+      {/* Background Decorative Accent */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-[30vw] font-serif text-primary opacity-[0.01] select-none pointer-events-none italic font-light">
+        Memories
       </div>
 
-      <div className="max-w-7xl mx-auto relative min-h-auto lg:min-h-[1000px]">
-        <div className="text-center mb-16 md:mb-32">
-          <span className="text-accent text-[10px] tracking-[0.5em] uppercase mb-4 md:mb-6 block font-light">
-            03 — Kind Words
+      <div className="max-w-7xl mx-auto">
+        <div className="text-center mb-24 md:mb-48" data-gsap-reveal>
+          <span className="text-accent text-[10px] md:text-[12px] tracking-[0.5em] uppercase mb-8 block font-light">
+            Kind Words
           </span>
-          <h2 className="text-4xl md:text-8xl font-serif text-primary mb-8 leading-none">
-            THE <span className="italic">PRESTIGE</span> <br /> EXPERIENCE
+          <h2 className="text-4xl md:text-8xl font-serif text-primary mb-12 leading-[1.1] font-light max-w-4xl mx-auto">
+            WHAT OUR <span className="italic">CLIENTS</span> <br />
+            HAVE TO <span className="font-sans uppercase tracking-[0.2em] text-[0.5em] align-middle ml-4">Say</span>
           </h2>
+          <div className="w-16 h-px bg-primary/20 mx-auto" />
         </div>
 
         {/* Scattered Editorial Layout */}
-        <div className="relative h-full flex flex-col lg:block gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 md:gap-24 lg:gap-32 items-start">
           {testimonials.map((item, index) => (
             <div 
               key={index}
+              data-gsap-reveal
               className={cn(
-                "testimonial-card absolute w-full lg:w-[450px] bg-white p-12 shadow-2xl border border-primary/5 z-10 transition-transform duration-700 hover:z-20 group",
-                item.pos,
-                item.rotate,
-                "relative lg:absolute mb-12 lg:mb-0"
+                "testimonial-card relative bg-white/40 backdrop-blur-sm p-12 md:p-16 border border-primary/5 transition-all duration-1000 group rounded-t-[1000px] rounded-b-[20px] shadow-[0_30px_60px_rgba(0,0,0,0.03)]",
+                index === 1 ? "lg:mt-32" : "",
+                index === 2 ? "lg:-mt-12" : ""
               )}
             >
-              {/* Tape Accent */}
-              <TapeEffect className="-top-2 left-1/2 -translate-x-1/2 opacity-60" />
+              {/* Refined Quote Icon */}
+              <div className="mb-12 flex justify-center">
+                <div className="w-8 h-8 rounded-full border border-accent/20 flex items-center justify-center">
+                  <span className="text-accent text-lg font-serif italic">"</span>
+                </div>
+              </div>
               
-              <Quote className="w-8 h-8 text-accent/20 mb-8 group-hover:text-accent/40 transition-colors" />
-              
-              <p className="text-xl md:text-2xl font-serif italic text-primary leading-snug mb-12">
-                &quot;{item.quote}&quot;
+              <p className="text-lg md:text-xl font-serif italic text-primary/80 leading-relaxed mb-12 text-center font-light">
+                {item.quote}
               </p>
               
-              <div className="flex flex-col border-t border-primary/5 pt-8">
-                <span className="text-accent text-sm font-serif mb-1">
+              <div className="flex flex-col items-center pt-10 border-t border-primary/5">
+                <span className="text-accent text-[11px] tracking-[0.2em] uppercase mb-2 font-bold font-sans">
                   {item.author}
                 </span>
-                <span className="text-[8px] tracking-[0.3em] uppercase opacity-40">
+                <span className="text-[9px] tracking-[0.3em] uppercase opacity-40 font-light font-sans">
                   {item.event}
                 </span>
-              </div>
-
-              {/* Technical Stamp */}
-              <div className="absolute bottom-4 right-4 text-[6px] font-mono opacity-10 tracking-widest uppercase">
-                Verified Orchestration — 2026
               </div>
             </div>
           ))}

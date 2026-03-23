@@ -62,6 +62,48 @@ export const HandDrawnCircle: React.FC<HandDrawnCircleProps> = ({
   );
 };
 
+export const BotanicalFlourish = ({ className }: { className?: string }) => (
+  <svg 
+    viewBox="0 0 100 100" 
+    fill="none" 
+    xmlns="http://www.w3.org/2000/svg" 
+    className={cn("absolute pointer-events-none select-none", className)}
+  >
+    <path 
+      d="M50 90C50 90 45 70 30 60C15 50 10 30 30 20C50 10 70 30 70 50C70 70 55 90 50 90Z" 
+      stroke="currentColor" 
+      strokeWidth="0.5" 
+      strokeDasharray="2 2"
+    />
+    <path 
+      d="M50 10C50 10 55 30 70 40C85 50 90 70 70 80C50 90 30 70 30 50C30 30 45 10 50 10Z" 
+      stroke="currentColor" 
+      strokeWidth="0.5"
+    />
+    <path 
+      d="M10 50C10 50 30 45 40 30C50 15 70 10 80 30C90 50 70 70 50 70C30 70 10 55 10 50Z" 
+      stroke="currentColor" 
+      strokeWidth="0.5" 
+      strokeDasharray="4 4"
+    />
+  </svg>
+);
+
 export const TapeEffect = ({ className }: { className?: string }) => (
   <div className={cn("absolute w-12 h-4 bg-secondary/40 backdrop-blur-sm rotate-12 shadow-sm border-x border-primary/5 z-30", className)} />
+);
+
+export const ArchFrame = ({ className }: { className?: string }) => (
+  <svg 
+    viewBox="0 0 100 150" 
+    fill="none" 
+    xmlns="http://www.w3.org/2000/svg" 
+    className={cn("pointer-events-none select-none", className)}
+  >
+    <path 
+      d="M5 145V50C5 25.1472 25.1472 5 50 5C74.8528 5 95 25.1472 95 50V145" 
+      stroke="currentColor" 
+      strokeWidth="1"
+    />
+  </svg>
 );

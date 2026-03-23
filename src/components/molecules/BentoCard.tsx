@@ -135,7 +135,7 @@ export const BentoCard: React.FC<BentoCardProps> = ({
     <div
       ref={cardRef}
       className={cn(
-        "relative group overflow-hidden bg-primary/5 rounded-sm cursor-pointer gallery-trigger touch-manipulation",
+        "relative group overflow-hidden bg-primary/5 cursor-pointer gallery-trigger touch-manipulation transition-all duration-700 rounded-t-full border-x border-t border-primary/10",
         sizeClasses[size],
         className
       )}
@@ -153,48 +153,20 @@ export const BentoCard: React.FC<BentoCardProps> = ({
       {/* Dynamic Overlay */}
       <div 
         ref={overlayRef}
-        className="absolute inset-0 bg-primary opacity-0 transition-opacity duration-1000 z-10"
+        className="absolute inset-0 bg-gradient-to-t from-primary/80 via-transparent to-transparent opacity-0 transition-opacity duration-1000 z-10"
       />
 
-      <TechnicalScanningOverlay active={isHovered} title={title} />
-
       {/* Content */}
-      <div className="absolute inset-0 p-12 flex flex-col justify-end z-20 pointer-events-none">
+      <div className="absolute inset-0 p-12 flex flex-col justify-end items-center text-center z-20 pointer-events-none">
         <div ref={textRef} className="opacity-80 transition-all">
           <span className="text-accent text-[8px] tracking-[0.4em] uppercase mb-3 block font-bold">
             {category}
           </span>
-          <h3 className="text-3xl md:text-4xl font-serif text-secondary leading-none tracking-tight">
+          <h3 className="text-3xl md:text-4xl font-serif text-secondary italic leading-none tracking-tight">
             {title}
           </h3>
         </div>
       </div>
-
-      {/* Technical Metadata Overlay — Human Curator Signal */}
-      <div 
-        className={cn(
-          "absolute top-8 left-8 z-20 opacity-0 transition-opacity duration-1000 flex flex-col gap-2 font-mono text-[6px] tracking-widest text-secondary pointer-events-none",
-          isHovered ? "opacity-40" : "group-hover:opacity-40"
-        )}
-      >
-        <div className="flex gap-4">
-          <span>CAP: 1/500s</span>
-          <span>F/2.8</span>
-          <span>ISO 100</span>
-        </div>
-        <div className="flex gap-4">
-          <span>LEN: 35MM</span>
-          <span>PRESTIGE_V4</span>
-        </div>
-      </div>
-
-      {/* High-End Border Trace */}
-      <div 
-        className={cn(
-          "absolute inset-0 border border-secondary/0 transition-all duration-1000 z-30 pointer-events-none",
-          isHovered ? "border-secondary/10" : "group-hover:border-secondary/10"
-        )} 
-      />
     </div>
   );
 };

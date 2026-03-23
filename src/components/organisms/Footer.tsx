@@ -6,6 +6,7 @@ import { MagneticButton } from "@/components/atoms/MagneticButton";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import Link from "next/link";
+import { BotanicalFlourish } from "@/components/atoms/AnalogAccents";
 
 const footerLinks = [
   {
@@ -39,19 +40,22 @@ export const Footer = () => {
   }, []);
 
   return (
-    <footer className="bg-primary text-secondary pt-48 pb-12 px-6 md:px-12 relative overflow-hidden">
+    <footer className="bg-primary text-secondary pt-32 pb-12 px-6 md:px-12 relative overflow-hidden">
+      <BotanicalFlourish className="absolute -top-32 -left-32 w-96 h-96 text-secondary opacity-5 pointer-events-none rotate-45" />
+      <BotanicalFlourish className="absolute bottom-0 right-0 w-80 h-80 text-secondary opacity-5 pointer-events-none -rotate-45" />
+      
       {/* Avant-Garde Brand Marquee - Atmospheric Motion */}
-      <div className="absolute top-0 left-0 w-full overflow-hidden border-b border-secondary/5 py-8">
+      <div className="absolute top-0 left-0 w-full overflow-hidden border-b border-secondary/10 py-6">
         <div ref={marqueeRef} className="marquee-content flex whitespace-nowrap gap-24">
           {[...Array(4)].map((_, i) => (
-            <span key={i} className="text-[10vh] font-serif text-secondary/5 uppercase tracking-[0.2em] italic">
-              Zing Bliss Events — Prestige Edition — Orchestrating the Sublime — 
+            <span key={i} className="text-[6vh] font-serif text-secondary/10 uppercase tracking-widest font-light">
+              Zing Bliss — Ultimate Wedding Reality — 
             </span>
           ))}
         </div>
       </div>
 
-      <div className="max-w-7xl mx-auto relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-24 lg:gap-12">
+      <div className="max-w-7xl mx-auto relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-24 lg:gap-12 mt-24">
         {/* Left Column: Brand Identity */}
         <div className="lg:col-span-5">
           <OrnateLogo light className="items-start text-left mb-12 scale-110 -ml-4" />

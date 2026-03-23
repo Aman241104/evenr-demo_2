@@ -95,25 +95,37 @@ export default function GalleryPage() {
       <section className="px-6 md:px-12">
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 auto-rows-[300px]">
-            {filteredItems.map((item) => (
-              <div 
-                key={`${item.title}-${activeCategory}`} 
-                className={cn(
-                  "animate-fade-in",
-                  item.size === "large" ? "md:col-span-2 row-span-2" : "",
-                  item.size === "medium" ? "row-span-2" : ""
-                )}
-              >
-                <BentoCard
-                  title={item.title}
-                  category={item.category}
-                  image={item.image}
-                  size={item.size}
-                  className="h-full"
-                  onClick={() => setSelectedImage({src: item.image, title: item.title})}
-                />
+            {filteredItems.length > 0 ? (
+              filteredItems.map((item) => (
+                <div 
+                  key={`${item.title}-${activeCategory}`} 
+                  className={cn(
+                    "animate-fade-in",
+                    item.size === "large" ? "md:col-span-2 row-span-2" : "",
+                    item.size === "medium" ? "row-span-2" : ""
+                  )}
+                >
+                  <BentoCard
+                    title={item.title}
+                    category={item.category}
+                    image={item.image}
+                    size={item.size}
+                    className="h-full"
+                    onClick={() => setSelectedImage({src: item.image, title: item.title})}
+                  />
+                </div>
+              ))
+            ) : (
+              <div className="col-span-full h-96 flex flex-col items-center justify-center text-center border border-dashed border-primary/10 rounded-2xl">
+                <p className="text-primary/40 font-serif italic mb-4">The archive is currently quiet in this category.</p>
+                <button 
+                  onClick={() => setActiveCategory("All")}
+                  className="text-[10px] tracking-[0.4em] uppercase text-accent hover:text-primary transition-colors"
+                >
+                  View All Celebrations
+                </button>
               </div>
-            ))}
+            )}
           </div>
         </div>
       </section>

@@ -141,50 +141,71 @@ export const Navbar = () => {
       <nav
         ref={navContainerRef}
         className={cn(
-          "fixed top-0 left-0 w-full z-[100] transition-all duration-700 px-6 py-4 md:px-12 md:py-8",
+          "fixed top-0 left-0 w-full z-[100] transition-all duration-700 px-6 py-4 md:px-12",
           isVisible ? "translate-y-0" : "-translate-y-full",
-          isScrolled ? "bg-secondary/60 backdrop-blur-xl py-4 md:py-4 border-b border-primary/5 shadow-2xl" : "bg-transparent"
+          isScrolled ? "bg-secondary/80 backdrop-blur-xl py-4 border-b border-primary/5 shadow-sm" : "bg-transparent py-8 md:py-12"
         )}
       >
-        <div className="max-w-7xl mx-auto flex items-center justify-between">
+        <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-8 md:gap-0">
+          {/* Left Links - Desktop */}
+          <div className="hidden md:flex items-center gap-10 flex-1">
+            {navLinks.slice(0, 2).map((link) => (
+              <Link
+                key={link.name}
+                href={link.href}
+                className="text-[9px] tracking-[0.4em] uppercase text-primary/60 hover:text-primary transition-all font-light cursor-pointer"
+              >
+                {link.name}
+              </Link>
+            ))}
+          </div>
+
+          {/* Centered Logo */}
           <Link 
             ref={logoRef}
             href="/" 
             className={cn(
-              "font-serif text-xl md:text-2xl tracking-tighter hover:opacity-70 transition-opacity inline-block",
-              isScrolled ? "text-primary" : "text-primary md:mix-blend-difference"
+              "font-serif text-xl md:text-2xl tracking-[0.3em] hover:opacity-70 transition-opacity inline-block uppercase z-10",
+              "text-primary"
             )}
           >
-            ZB<span className="text-accent">.</span>EVENTS
+            ZING BLISS
           </Link>
 
-          {/* Desktop Ghost Navigation */}
-          <div className="hidden md:flex items-center gap-16">
-            {navLinks.map((link) => (
+          {/* Right Links - Desktop */}
+          <div className="hidden md:flex items-center gap-10 flex-1 justify-end">
+            {navLinks.slice(2).map((link) => (
               <Link
                 key={link.name}
                 href={link.href}
-                className="text-[10px] tracking-[0.4em] uppercase text-primary/60 hover:text-primary transition-all hover:tracking-[0.5em] font-light cursor-pointer"
+                className="text-[9px] tracking-[0.4em] uppercase text-primary/60 hover:text-primary transition-all font-light cursor-pointer"
               >
                 {link.name}
               </Link>
             ))}
             <Link href="/contact">
-              <MagneticButton className="px-8 py-3 text-[10px] tracking-[0.4em] uppercase shadow-lg cursor-pointer">
-                The Dialogue
-              </MagneticButton>
+              <span className="text-[9px] tracking-[0.4em] uppercase text-accent hover:text-primary transition-all font-bold cursor-pointer ml-4">
+                INITIATE
+              </span>
             </Link>
           </div>
 
           <button 
             onClick={toggleMenu}
-            className="md:hidden text-primary p-2 z-[110]"
+            className="md:hidden text-primary p-2 absolute right-6 top-1/2 -translate-y-1/2"
             aria-label={isMenuOpen ? "Close Menu" : "Open Menu"}
-            aria-expanded={isMenuOpen}
           >
             {isMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
           </button>
         </div>
+
+        {/* Delicate Top/Bottom Border Accents - Editorial Style */}
+        {!isScrolled && (
+          <>
+            <div className="absolute top-0 left-12 right-12 h-px bg-primary/5" />
+            <div className="absolute bottom-0 left-12 right-12 h-px bg-primary/5" />
+          </>
+        )}
       </nav>
 
       {/* Full Screen Mobile Menu Overlay */}
@@ -201,8 +222,8 @@ export const Navbar = () => {
 
         <div className="flex flex-col items-center gap-10">
           <div className="flex flex-col items-center mb-8">
-            <span className="text-accent text-[10px] tracking-[0.5em] uppercase mb-2 font-light">ZB.EVENTS</span>
-            <span className="text-primary/30 text-[8px] tracking-[0.3em] uppercase">Prestige Edition</span>
+            <span className="text-accent text-[12px] tracking-[0.5em] uppercase mb-2 font-serif italic">Zing Bliss</span>
+            <span className="text-primary/40 text-[8px] tracking-[0.3em] uppercase">Wedding Planners</span>
           </div>
 
           {navLinks.map((link, i) => (
@@ -211,7 +232,7 @@ export const Navbar = () => {
               ref={(el) => { linksRef.current[i] = el; }}
               href={link.href}
               onClick={() => setIsMenuOpen(false)}
-              className="text-4xl font-serif text-primary hover:text-accent transition-all hover:italic"
+              className="text-4xl font-serif text-primary hover:text-accent transition-all hover:italic font-light"
             >
               {link.name}
             </Link>
@@ -222,8 +243,8 @@ export const Navbar = () => {
             onClick={() => setIsMenuOpen(false)}
             className="mt-8"
           >
-            <MagneticButton className="px-12 py-4 text-[10px] tracking-[0.4em] uppercase">
-              The Dialogue
+            <MagneticButton className="px-12 py-4 text-[10px] tracking-[0.3em] uppercase border border-primary/20 hover:bg-primary hover:text-secondary transition-colors">
+              Contact Us
             </MagneticButton>
           </Link>
         </div>

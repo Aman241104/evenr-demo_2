@@ -32,6 +32,7 @@ export const ConciergeBar = () => {
         <button 
           onClick={handleWhatsApp}
           className="flex items-center gap-2 md:gap-3 px-4 md:px-6 py-2 md:py-3 rounded-full hover:bg-white/10 transition-colors group"
+          aria-label="Contact us on WhatsApp"
         >
           <MessageCircle className="w-3.5 h-3.5 md:w-4 md:h-4 text-accent" />
           <span className="text-[9px] md:text-[10px] tracking-[0.2em] uppercase font-light hidden md:block">
@@ -41,7 +42,11 @@ export const ConciergeBar = () => {
 
         <div className="w-[1px] h-4 md:h-6 bg-secondary/20" />
 
-        <Link href="/contact" className="flex items-center gap-2 md:gap-3 px-4 md:px-6 py-2 md:py-3 rounded-full hover:bg-white/10 transition-colors group">
+        <Link 
+          href="/contact" 
+          className="flex items-center gap-2 md:gap-3 px-4 md:px-6 py-2 md:py-3 rounded-full hover:bg-white/10 transition-colors group"
+          aria-label="Book a consultation"
+        >
           <Calendar className="w-3.5 h-3.5 md:w-4 md:h-4 text-accent" />
           <span className="text-[9px] md:text-[10px] tracking-[0.2em] uppercase font-light hidden md:block">
             Consultation
@@ -50,9 +55,13 @@ export const ConciergeBar = () => {
 
         <div className="w-[1px] h-4 md:h-6 bg-secondary/20" />
 
-        <button className="p-2 md:p-3 hover:bg-white/10 rounded-full transition-colors group">
+        <a 
+          href={`tel:${WHATSAPP_CONFIG.number}`}
+          className="p-2 md:p-3 hover:bg-white/10 rounded-full transition-colors group"
+          aria-label="Call our concierge"
+        >
           <PhoneCall className="w-3.5 h-3.5 md:w-4 md:h-4 text-accent" />
-        </button>
+        </a>
       </div>
     </div>
   );

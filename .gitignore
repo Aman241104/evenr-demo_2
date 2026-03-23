@@ -42,6 +42,10 @@ next-env.d.ts
 
 # Large artifacts/screenshots
 *.png
+*.jpg
 /extracted_imgs/
 /ref/
 dev.log
+zing*.txt
+*.tsbuildinfo
+next-env.d.ts
